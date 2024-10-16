@@ -1,0 +1,2 @@
+emcc src/raylib_qjs.c -c -o raylib_qjs.o -sSIDE_MODULE=1 -I ../gfx/raylib251123/src/ -I ../gfx/raygui/src/ -I ../quickjs/ -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sFULL_ES3 -O3
+emcc raylib_qjs.o ../gfx/raylib251123/src/libraylib.dyn.a ../gfx/glfw/src/build/libglfw.dyn.a ../gfx/exa-wayland/src/build/libexa-wayland.dyn.a -o raylib_qjs.so -sSIDE_MODULE=1  -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sFULL_ES3 -sEXPORTED_RUNTIME_METHODS=ccall,cwrap
