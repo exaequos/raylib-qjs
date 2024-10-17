@@ -42,6 +42,8 @@ enum {
     JS_ATOM_END,
 };
 
+#include "raymath.h"
+
 #include <emscripten.h>
 
 #define countof(x) (sizeof(x) / sizeof((x)[0]))
@@ -7732,11 +7734,41 @@ static JSValue js_IsCursorOnScreen(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_ClearBackground(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
     ClearBackground(arg0);
 
 
@@ -8129,11 +8161,31 @@ static JSValue js_UnloadShader(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_GetMouseRay(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
         if (argptr1 == NULL)
         argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera3D_class_id);
         if (argptr1 == NULL) return JS_EXCEPTION;
@@ -8194,11 +8246,36 @@ static JSValue js_GetCameraMatrix2D(JSContext *ctx, JSValueConst this_val, int a
 
 static JSValue js_GetWorldToScreen(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
         if (argptr1 == NULL)
         argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera3D_class_id);
         if (argptr1 == NULL) return JS_EXCEPTION;
@@ -8219,11 +8296,31 @@ static JSValue js_GetWorldToScreen(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_GetScreenToWorld2D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Camera2D * argptr1 = (Camera2D *)JS_GetOpaque2(ctx, argv[1], js_Camera2D_class_id);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Camera2D * argptr1 = (Camera2D *)JS_GetOpaque2(ctx, argv[1], js_Camera2D_class_id);
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         Camera2D arg1 = *argptr1;
@@ -8242,11 +8339,36 @@ static JSValue js_GetScreenToWorld2D(JSContext *ctx, JSValueConst this_val, int 
 
 static JSValue js_GetWorldToScreenEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Camera * argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera_class_id);
         if (argptr1 == NULL)
         argptr1 = (Camera *)JS_GetOpaque2(ctx, argv[1], js_Camera3D_class_id);
         if (argptr1 == NULL) return JS_EXCEPTION;
@@ -8271,11 +8393,31 @@ static JSValue js_GetWorldToScreenEx(JSContext *ctx, JSValueConst this_val, int 
 
 static JSValue js_GetWorldToScreen2D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Camera2D * argptr1 = (Camera2D *)JS_GetOpaque2(ctx, argv[1], js_Camera2D_class_id);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Camera2D * argptr1 = (Camera2D *)JS_GetOpaque2(ctx, argv[1], js_Camera2D_class_id);
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         Camera2D arg1 = *argptr1;
@@ -8558,7 +8700,20 @@ const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
 
 static JSValue js_UnloadFileText(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-return JS_UNDEFINED;
+    JSValue arg0_js = JS_GetPropertyStr(ctx, argv[0], "text");
+    size_t arg0_len;
+    const char * arg0_str = JS_ToCStringLen(ctx, &arg0_len, arg0_js);
+    char * arg0 = malloc(arg0_len+1);
+    memcpy((void *)arg0, arg0_str, arg0_len);
+    arg0[arg0_len] = 0;
+                
+    UnloadFileText(arg0);
+
+    JS_FreeCString(ctx, arg0_str);
+                JS_SetPropertyStr(ctx, argv[0], "text", JS_NewString(ctx, arg0));
+                free(arg0);
+
+    return JS_UNDEFINED;
 }
 
 static JSValue js_SaveFileText(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -9527,15 +9682,65 @@ static JSValue js_UpdateCameraPro(JSContext *ctx, JSValueConst this_val, int arg
     Camera * arg0 = (Camera *)JS_GetOpaque2(ctx, argv[0], js_Camera_class_id);
         if (arg0 == NULL)
         arg0 = (Camera *)JS_GetOpaque2(ctx, argv[0], js_Camera3D_class_id);
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
                     
-        Vector3 arg2 = *argptr2;
-    double arg3;
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
 
     UpdateCameraPro(arg0, arg1, arg2, arg3);
@@ -9552,11 +9757,41 @@ static JSValue js_SetShapesTexture(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
 
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     SetShapesTexture(arg0, arg1);
 
 
@@ -9569,11 +9804,41 @@ static JSValue js_DrawPixel(JSContext *ctx, JSValueConst this_val, int argc, JSV
     JS_ToInt32(ctx, &arg0, argv[0]);
     int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawPixel(arg0, arg1, arg2);
 
 
@@ -9582,15 +9847,65 @@ static JSValue js_DrawPixel(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_DrawPixelV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     DrawPixelV(arg0, arg1);
 
 
@@ -9607,11 +9922,41 @@ static JSValue js_DrawLine(JSContext *ctx, JSValueConst this_val, int argc, JSVa
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawLine(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -9620,19 +9965,89 @@ static JSValue js_DrawLine(JSContext *ctx, JSValueConst this_val, int argc, JSVa
 
 static JSValue js_DrawLineV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawLineV(arg0, arg1, arg2);
 
 
@@ -9641,44 +10056,251 @@ static JSValue js_DrawLineV(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_DrawLineEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    double arg2;
-    JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawLineEx(arg0, arg1, arg2, arg3);
 
 
     return JS_UNDEFINED;
 }
 
+static JSValue js_DrawLineStrip(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    DrawLineStrip(arg0, arg1, arg2);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
 static JSValue js_DrawLineBezier(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    double arg2;
-    JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawLineBezier(arg0, arg1, arg2, arg3);
 
 
@@ -9693,11 +10315,41 @@ static JSValue js_DrawCircle(JSContext *ctx, JSValueConst this_val, int argc, JS
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawCircle(arg0, arg1, arg2, arg3);
 
 
@@ -9706,11 +10358,31 @@ static JSValue js_DrawCircle(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_DrawCircleSector(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -9718,11 +10390,41 @@ static JSValue js_DrawCircleSector(JSContext *ctx, JSValueConst this_val, int ar
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCircleSector(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -9731,11 +10433,31 @@ static JSValue js_DrawCircleSector(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_DrawCircleSectorLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -9743,11 +10465,41 @@ static JSValue js_DrawCircleSectorLines(JSContext *ctx, JSValueConst this_val, i
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCircleSectorLines(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -9762,15 +10514,75 @@ static JSValue js_DrawCircleGradient(JSContext *ctx, JSValueConst this_val, int 
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawCircleGradient(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -9779,17 +10591,67 @@ static JSValue js_DrawCircleGradient(JSContext *ctx, JSValueConst this_val, int 
 
 static JSValue js_DrawCircleV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawCircleV(arg0, arg1, arg2);
 
 
@@ -9804,11 +10666,41 @@ static JSValue js_DrawCircleLines(JSContext *ctx, JSValueConst this_val, int arg
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawCircleLines(arg0, arg1, arg2, arg3);
 
 
@@ -9817,17 +10709,67 @@ static JSValue js_DrawCircleLines(JSContext *ctx, JSValueConst this_val, int arg
 
 static JSValue js_DrawCircleLinesV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawCircleLinesV(arg0, arg1, arg2);
 
 
@@ -9844,11 +10786,41 @@ static JSValue js_DrawEllipse(JSContext *ctx, JSValueConst this_val, int argc, J
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawEllipse(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -9865,11 +10837,41 @@ static JSValue js_DrawEllipseLines(JSContext *ctx, JSValueConst this_val, int ar
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawEllipseLines(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -9878,11 +10880,31 @@ static JSValue js_DrawEllipseLines(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_DrawRing(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -9892,11 +10914,41 @@ static JSValue js_DrawRing(JSContext *ctx, JSValueConst this_val, int argc, JSVa
     JS_ToFloat64(ctx, &arg4, argv[4]);
     int arg5;
     JS_ToInt32(ctx, &arg5, argv[5]);
-    Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
-        if (argptr6 == NULL) return JS_EXCEPTION;
-                    
-        Color arg6 = *argptr6;
 
+
+                    Color arg6;
+
+                    if (JS_IsArray(ctx, argv[6])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[6], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg6.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[6], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg6.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[6], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg6.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[6], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg6.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
+
+                      if (argptr6 == NULL) return JS_EXCEPTION;
+                      
+                      arg6 = *argptr6;
+                    }
+                    
     DrawRing(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 
 
@@ -9905,11 +10957,31 @@ static JSValue js_DrawRing(JSContext *ctx, JSValueConst this_val, int argc, JSVa
 
 static JSValue js_DrawRingLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -9919,11 +10991,41 @@ static JSValue js_DrawRingLines(JSContext *ctx, JSValueConst this_val, int argc,
     JS_ToFloat64(ctx, &arg4, argv[4]);
     int arg5;
     JS_ToInt32(ctx, &arg5, argv[5]);
-    Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
-        if (argptr6 == NULL) return JS_EXCEPTION;
-                    
-        Color arg6 = *argptr6;
 
+
+                    Color arg6;
+
+                    if (JS_IsArray(ctx, argv[6])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[6], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg6.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[6], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg6.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[6], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg6.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[6], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg6.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
+
+                      if (argptr6 == NULL) return JS_EXCEPTION;
+                      
+                      arg6 = *argptr6;
+                    }
+                    
     DrawRingLines(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 
 
@@ -9940,11 +11042,41 @@ static JSValue js_DrawRectangle(JSContext *ctx, JSValueConst this_val, int argc,
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawRectangle(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -9953,19 +11085,89 @@ static JSValue js_DrawRectangle(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_DrawRectangleV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawRectangleV(arg0, arg1, arg2);
 
 
@@ -9974,15 +11176,75 @@ static JSValue js_DrawRectangleV(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_DrawRectangleRec(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     DrawRectangleRec(arg0, arg1);
 
 
@@ -9991,21 +11253,101 @@ static JSValue js_DrawRectangleRec(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_DrawRectanglePro(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    double arg2;
-    JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawRectanglePro(arg0, arg1, arg2, arg3);
 
 
@@ -10022,15 +11364,75 @@ static JSValue js_DrawRectangleGradientV(JSContext *ctx, JSValueConst this_val, 
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawRectangleGradientV(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -10047,15 +11449,75 @@ static JSValue js_DrawRectangleGradientH(JSContext *ctx, JSValueConst this_val, 
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawRectangleGradientH(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -10064,27 +11526,177 @@ static JSValue js_DrawRectangleGradientH(JSContext *ctx, JSValueConst this_val, 
 
 static JSValue js_DrawRectangleGradientEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawRectangleGradientEx(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10101,11 +11713,41 @@ static JSValue js_DrawRectangleLines(JSContext *ctx, JSValueConst this_val, int 
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawRectangleLines(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10114,17 +11756,77 @@ static JSValue js_DrawRectangleLines(JSContext *ctx, JSValueConst this_val, int 
 
 static JSValue js_DrawRectangleLinesEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawRectangleLinesEx(arg0, arg1, arg2);
 
 
@@ -10133,19 +11835,79 @@ static JSValue js_DrawRectangleLinesEx(JSContext *ctx, JSValueConst this_val, in
 
 static JSValue js_DrawRectangleRounded(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawRectangleRounded(arg0, arg1, arg2, arg3);
 
 
@@ -10154,21 +11916,81 @@ static JSValue js_DrawRectangleRounded(JSContext *ctx, JSValueConst this_val, in
 
 static JSValue js_DrawRectangleRoundedLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawRectangleRoundedLines(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10177,23 +11999,113 @@ static JSValue js_DrawRectangleRoundedLines(JSContext *ctx, JSValueConst this_va
 
 static JSValue js_DrawTriangle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawTriangle(arg0, arg1, arg2, arg3);
 
 
@@ -10202,46 +12114,320 @@ static JSValue js_DrawTriangle(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_DrawTriangleLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawTriangleLines(arg0, arg1, arg2, arg3);
 
 
     return JS_UNDEFINED;
 }
 
+static JSValue js_DrawTriangleFan(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    DrawTriangleFan(arg0, arg1, arg2);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawTriangleStrip(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    DrawTriangleStrip(arg0, arg1, arg2);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
 static JSValue js_DrawPoly(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    int arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawPoly(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10250,21 +12436,71 @@ static JSValue js_DrawPoly(JSContext *ctx, JSValueConst this_val, int argc, JSVa
 
 static JSValue js_DrawPolyLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    int arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawPolyLines(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10273,11 +12509,31 @@ static JSValue js_DrawPolyLines(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_DrawPolyLinesEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    int arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -10285,34 +12541,479 @@ static JSValue js_DrawPolyLinesEx(JSContext *ctx, JSValueConst this_val, int arg
     JS_ToFloat64(ctx, &arg3, argv[3]);
     double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawPolyLinesEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
     return JS_UNDEFINED;
 }
 
-static JSValue js_DrawSplineSegmentLinear(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+static JSValue js_DrawSplineLinear(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    DrawSplineLinear(arg0, arg1, arg2, arg3);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawSplineBasis(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    DrawSplineBasis(arg0, arg1, arg2, arg3);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawSplineCatmullRom(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    DrawSplineCatmullRom(arg0, arg1, arg2, arg3);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawSplineBezierQuadratic(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    DrawSplineBezierQuadratic(arg0, arg1, arg2, arg3);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawSplineBezierCubic(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector2 * arg0 = (Vector2 *)malloc(arg0_length*sizeof(Vector2));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    DrawSplineBezierCubic(arg0, arg1, arg2, arg3);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
+static JSValue js_DrawSplineSegmentLinear(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawSplineSegmentLinear(arg0, arg1, arg2, arg3);
 
 
@@ -10321,29 +13022,139 @@ static JSValue js_DrawSplineSegmentLinear(JSContext *ctx, JSValueConst this_val,
 
 static JSValue js_DrawSplineSegmentBasis(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
-    double arg4;
-    JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawSplineSegmentBasis(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -10352,29 +13163,139 @@ static JSValue js_DrawSplineSegmentBasis(JSContext *ctx, JSValueConst this_val, 
 
 static JSValue js_DrawSplineSegmentCatmullRom(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
-    double arg4;
-    JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawSplineSegmentCatmullRom(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -10383,25 +13304,115 @@ static JSValue js_DrawSplineSegmentCatmullRom(JSContext *ctx, JSValueConst this_
 
 static JSValue js_DrawSplineSegmentBezierQuadratic(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawSplineSegmentBezierQuadratic(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -10410,29 +13421,139 @@ static JSValue js_DrawSplineSegmentBezierQuadratic(JSContext *ctx, JSValueConst 
 
 static JSValue js_DrawSplineSegmentBezierCubic(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
-    double arg4;
-    JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawSplineSegmentBezierCubic(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -10441,15 +13562,55 @@ static JSValue js_DrawSplineSegmentBezierCubic(JSContext *ctx, JSValueConst this
 
 static JSValue js_GetSplinePointLinear(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    double arg2;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
 
     Vector2 returnVal = GetSplinePointLinear(arg0, arg1, arg2);
@@ -10466,23 +13627,103 @@ static JSValue js_GetSplinePointLinear(JSContext *ctx, JSValueConst this_val, in
 
 static JSValue js_GetSplinePointBasis(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
                     
-        Vector2 arg3 = *argptr3;
-    double arg4;
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
 
     Vector2 returnVal = GetSplinePointBasis(arg0, arg1, arg2, arg3, arg4);
@@ -10499,23 +13740,103 @@ static JSValue js_GetSplinePointBasis(JSContext *ctx, JSValueConst this_val, int
 
 static JSValue js_GetSplinePointCatmullRom(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
                     
-        Vector2 arg3 = *argptr3;
-    double arg4;
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
 
     Vector2 returnVal = GetSplinePointCatmullRom(arg0, arg1, arg2, arg3, arg4);
@@ -10532,19 +13853,79 @@ static JSValue js_GetSplinePointCatmullRom(JSContext *ctx, JSValueConst this_val
 
 static JSValue js_GetSplinePointBezierQuad(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    double arg3;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
 
     Vector2 returnVal = GetSplinePointBezierQuad(arg0, arg1, arg2, arg3);
@@ -10561,23 +13942,103 @@ static JSValue js_GetSplinePointBezierQuad(JSContext *ctx, JSValueConst this_val
 
 static JSValue js_GetSplinePointBezierCubic(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
                     
-        Vector2 arg3 = *argptr3;
-    double arg4;
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
 
     Vector2 returnVal = GetSplinePointBezierCubic(arg0, arg1, arg2, arg3, arg4);
@@ -10594,15 +14055,75 @@ static JSValue js_GetSplinePointBezierCubic(JSContext *ctx, JSValueConst this_va
 
 static JSValue js_CheckCollisionRecs(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     bool ret = CheckCollisionRecs(arg0, arg1);
 
 
@@ -10611,17 +14132,57 @@ static JSValue js_CheckCollisionRecs(JSContext *ctx, JSValueConst this_val, int 
 
 static JSValue js_CheckCollisionCircles(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    double arg3;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
 
     bool ret = CheckCollisionCircles(arg0, arg1, arg2, arg3);
@@ -10632,17 +14193,67 @@ static JSValue js_CheckCollisionCircles(JSContext *ctx, JSValueConst this_val, i
 
 static JSValue js_CheckCollisionCircleRec(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg2 = *argptr2;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     bool ret = CheckCollisionCircleRec(arg0, arg1, arg2);
 
 
@@ -10651,15 +14262,65 @@ static JSValue js_CheckCollisionCircleRec(JSContext *ctx, JSValueConst this_val,
 
 static JSValue js_CheckCollisionPointRec(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     bool ret = CheckCollisionPointRec(arg0, arg1);
 
 
@@ -10668,15 +14329,55 @@ static JSValue js_CheckCollisionPointRec(JSContext *ctx, JSValueConst this_val, 
 
 static JSValue js_CheckCollisionPointCircle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    double arg2;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
 
     bool ret = CheckCollisionPointCircle(arg0, arg1, arg2);
@@ -10687,24 +14388,267 @@ static JSValue js_CheckCollisionPointCircle(JSContext *ctx, JSValueConst this_va
 
 static JSValue js_CheckCollisionPointTriangle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
 
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     bool ret = CheckCollisionPointTriangle(arg0, arg1, arg2, arg3);
+
+
+    return JS_NewBool(ctx, ret);
+}
+
+static JSValue js_CheckCollisionPointPoly(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    JSValue arg1_length_js = JS_GetProperty(ctx, argv[1], JS_ATOM_length);
+	
+	int32_t arg1_length;
+	
+        JS_ToInt32(ctx, &arg1_length, arg1_length_js);
+
+	Vector2 * arg1 = (Vector2 *)malloc(arg1_length*sizeof(Vector2));
+
+	for (int i=0; i < arg1_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[1], i);
+
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+	  
+	  arg1[i] = *obj;
+	}
+                    
+                        int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+
+    bool ret = CheckCollisionPointPoly(arg0, arg1, arg2);
+
+
+                    if (arg1)
+        free(arg1);
+                    
+    return JS_NewBool(ctx, ret);
+}
+
+static JSValue js_CheckCollisionLines(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        Vector2 * arg4 = (Vector2 *)JS_GetOpaque2(ctx, argv[4], js_Vector2_class_id);
+
+    bool ret = CheckCollisionLines(arg0, arg1, arg2, arg3, arg4);
 
 
     return JS_NewBool(ctx, ret);
@@ -10712,19 +14656,79 @@ static JSValue js_CheckCollisionPointTriangle(JSContext *ctx, JSValueConst this_
 
 static JSValue js_CheckCollisionPointLine(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector2 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector2 arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    int arg3;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
 
     bool ret = CheckCollisionPointLine(arg0, arg1, arg2, arg3);
@@ -10735,15 +14739,75 @@ static JSValue js_CheckCollisionPointLine(JSContext *ctx, JSValueConst this_val,
 
 static JSValue js_GetCollisionRec(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
 
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     Rectangle returnVal = GetCollisionRec(arg0, arg1);
 
 
@@ -10981,11 +15045,41 @@ static JSValue js_GenImageColor(JSContext *ctx, JSValueConst this_val, int argc,
     JS_ToInt32(ctx, &arg0, argv[0]);
     int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     Image returnVal = GenImageColor(arg0, arg1, arg2);
 
 
@@ -11006,15 +15100,75 @@ static JSValue js_GenImageGradientLinear(JSContext *ctx, JSValueConst this_val, 
     JS_ToInt32(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     Image returnVal = GenImageGradientLinear(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -11035,15 +15189,75 @@ static JSValue js_GenImageGradientRadial(JSContext *ctx, JSValueConst this_val, 
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     Image returnVal = GenImageGradientRadial(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -11064,15 +15278,75 @@ static JSValue js_GenImageGradientSquare(JSContext *ctx, JSValueConst this_val, 
     JS_ToInt32(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     Image returnVal = GenImageGradientSquare(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -11095,15 +15369,75 @@ static JSValue js_GenImageChecked(JSContext *ctx, JSValueConst this_val, int arg
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     Image returnVal = GenImageChecked(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -11409,14 +15743,56 @@ static JSValue js_UpdateTextureRec(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Rectangle arg1 = *argptr1;
-size_t data_size2;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    size_t data_size2;
     const void * arg2 = (const void *)JS_GetArrayBuffer(ctx, &data_size2, argv[2]);
 
     UpdateTextureRec(arg0, arg1, arg2);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_GenTextureMipmaps(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Texture2D * arg0 = (Texture2D *)JS_GetOpaque2(ctx, argv[0], js_Texture2D_class_id);
+        if (arg0 == NULL)
+        arg0 = (Texture2D *)JS_GetOpaque2(ctx, argv[0], js_Texture_class_id);
+
+    GenTextureMipmaps(arg0);
 
 
     return JS_UNDEFINED;
@@ -11468,11 +15844,41 @@ static JSValue js_DrawTexture(JSContext *ctx, JSValueConst this_val, int argc, J
     JS_ToInt32(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawTexture(arg0, arg1, arg2, arg3);
 
 
@@ -11487,15 +15893,65 @@ static JSValue js_DrawTextureV(JSContext *ctx, JSValueConst this_val, int argc, 
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawTextureV(arg0, arg1, arg2);
 
 
@@ -11510,19 +15966,69 @@ static JSValue js_DrawTextureEx(JSContext *ctx, JSValueConst this_val, int argc,
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector2 arg1 = *argptr1;
-    double arg2;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawTextureEx(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -11537,19 +16043,99 @@ static JSValue js_DrawTextureRec(JSContext *ctx, JSValueConst this_val, int argc
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawTextureRec(arg0, arg1, arg2, arg3);
 
 
@@ -11564,25 +16150,135 @@ static JSValue js_DrawTexturePro(JSContext *ctx, JSValueConst this_val, int argc
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg0 = *argptr0;
-    Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg1 = *argptr1;
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
-    double arg4;
-    JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Rectangle arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg1.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg1.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr1 = (Rectangle *)JS_GetOpaque2(ctx, argv[1], js_Rectangle_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawTexturePro(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -11601,21 +16297,101 @@ static JSValue js_DrawTextureNPatch(JSContext *ctx, JSValueConst this_val, int a
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         NPatchInfo arg1 = *argptr1;
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg3 = *argptr3;
-    double arg4;
-    JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawTextureNPatch(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -11624,11 +16400,41 @@ static JSValue js_DrawTextureNPatch(JSContext *ctx, JSValueConst this_val, int a
 
 static JSValue js_Fade(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
                     
-        Color arg0 = *argptr0;
-    double arg1;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
 
     Color returnVal = Fade(arg0, arg1);
@@ -11645,11 +16451,41 @@ static JSValue js_Fade(JSContext *ctx, JSValueConst this_val, int argc, JSValueC
 
 static JSValue js_ColorToInt(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
     int ret = ColorToInt(arg0);
 
 
@@ -11658,11 +16494,41 @@ static JSValue js_ColorToInt(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_ColorNormalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
     Vector4 returnVal = ColorNormalize(arg0);
 
 
@@ -11677,13 +16543,41 @@ static JSValue js_ColorNormalize(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_ColorFromNormalized(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector4 * argptr0 = (Vector4 *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
-        if (argptr0 == NULL)
-        argptr0 = (Vector4 *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector4 arg0 = *argptr0;
 
+
+                    Vector4 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.w = (float)w_double;
+                    }
+                    else {
+
+                      Vector4 * argptr0 = (Vector4 *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
     Color returnVal = ColorFromNormalized(arg0);
 
 
@@ -11698,11 +16592,41 @@ static JSValue js_ColorFromNormalized(JSContext *ctx, JSValueConst this_val, int
 
 static JSValue js_ColorToHSV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
     Vector3 returnVal = ColorToHSV(arg0);
 
 
@@ -11738,15 +16662,75 @@ static JSValue js_ColorFromHSV(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_ColorTint(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     Color returnVal = ColorTint(arg0, arg1);
 
 
@@ -11761,11 +16745,41 @@ static JSValue js_ColorTint(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_ColorBrightness(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
                     
-        Color arg0 = *argptr0;
-    double arg1;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
 
     Color returnVal = ColorBrightness(arg0, arg1);
@@ -11782,11 +16796,41 @@ static JSValue js_ColorBrightness(JSContext *ctx, JSValueConst this_val, int arg
 
 static JSValue js_ColorContrast(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
                     
-        Color arg0 = *argptr0;
-    double arg1;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
 
     Color returnVal = ColorContrast(arg0, arg1);
@@ -11803,11 +16847,41 @@ static JSValue js_ColorContrast(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_ColorAlpha(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
                     
-        Color arg0 = *argptr0;
-    double arg1;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
 
     Color returnVal = ColorAlpha(arg0, arg1);
@@ -11824,19 +16898,109 @@ static JSValue js_ColorAlpha(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_ColorAlphaBlend(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Color arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Color arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg0.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg0.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg0.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg0.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr0 = (Color *)JS_GetOpaque2(ctx, argv[0], js_Color_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     Color returnVal = ColorAlphaBlend(arg0, arg1, arg2);
 
 
@@ -11889,11 +17053,41 @@ static JSValue js_SetPixelColor(JSContext *ctx, JSValueConst this_val, int argc,
 {
 size_t data_size0;
     void * arg0 = (void *)JS_GetArrayBuffer(ctx, &data_size0, argv[0]);
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
                     
-        Color arg1 = *argptr1;
-    int arg2;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
 
     SetPixelColor(arg0, arg1, arg2);
@@ -11981,11 +17175,41 @@ static JSValue js_LoadFontFromImage(JSContext *ctx, JSValueConst this_val, int a
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Image arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
                     
-        Color arg1 = *argptr1;
-    int arg2;
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
 
     Font returnVal = LoadFontFromImage(arg0, arg1, arg2);
@@ -12093,11 +17317,41 @@ static JSValue js_DrawText(JSContext *ctx, JSValueConst this_val, int argc, JSVa
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawText(arg0, arg1, arg2, arg3, arg4);
 
     JS_FreeCString(ctx, arg0);
@@ -12112,19 +17366,69 @@ static JSValue js_DrawTextEx(JSContext *ctx, JSValueConst this_val, int argc, JS
                     
         Font arg0 = *argptr0;
     const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    double arg3;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
     double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawTextEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
     JS_FreeCString(ctx, arg1);
@@ -12139,25 +17443,95 @@ static JSValue js_DrawTextPro(JSContext *ctx, JSValueConst this_val, int argc, J
                     
         Font arg0 = *argptr0;
     const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
                     
-        Vector2 arg2 = *argptr2;
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
                     
-        Vector2 arg3 = *argptr3;
-    double arg4;
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
     double arg5;
     JS_ToFloat64(ctx, &arg5, argv[5]);
     double arg6;
     JS_ToFloat64(ctx, &arg6, argv[6]);
-    Color * argptr7 = (Color *)JS_GetOpaque2(ctx, argv[7], js_Color_class_id);
-        if (argptr7 == NULL) return JS_EXCEPTION;
-                    
-        Color arg7 = *argptr7;
 
+
+                    Color arg7;
+
+                    if (JS_IsArray(ctx, argv[7])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[7], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg7.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[7], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg7.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[7], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg7.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[7], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg7.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr7 = (Color *)JS_GetOpaque2(ctx, argv[7], js_Color_class_id);
+
+                      if (argptr7 == NULL) return JS_EXCEPTION;
+                      
+                      arg7 = *argptr7;
+                    }
+                    
     DrawTextPro(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 
     JS_FreeCString(ctx, arg1);
@@ -12173,17 +17547,67 @@ static JSValue js_DrawTextCodepoint(JSContext *ctx, JSValueConst this_val, int a
         Font arg0 = *argptr0;
     int arg1;
     JS_ToInt32(ctx, &arg1, argv[1]);
-    Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawTextCodepoint(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12202,19 +17626,69 @@ JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "codepoints");
     int * arg1 = &arg1_int;
                         int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
-    Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
+
+
+                    Vector2 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
                     
-        Vector2 arg3 = *argptr3;
-    double arg4;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                        double arg4;
     JS_ToFloat64(ctx, &arg4, argv[4]);
     double arg5;
     JS_ToFloat64(ctx, &arg5, argv[5]);
-    Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
-        if (argptr6 == NULL) return JS_EXCEPTION;
-                    
-        Color arg6 = *argptr6;
 
+
+                    Color arg6;
+
+                    if (JS_IsArray(ctx, argv[6])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[6], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg6.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[6], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg6.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[6], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg6.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[6], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg6.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr6 = (Color *)JS_GetOpaque2(ctx, argv[6], js_Color_class_id);
+
+                      if (argptr6 == NULL) return JS_EXCEPTION;
+                      
+                      arg6 = *argptr6;
+                    }
+                    
     DrawTextCodepoints(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 
 JS_SetPropertyStr(ctx, argv[1], "codepoints", JS_NewInt32(ctx, arg1_int));
@@ -12660,19 +18134,99 @@ static JSValue js_TextToInteger(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_DrawLine3D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawLine3D(arg0, arg1, arg2);
 
 
@@ -12681,15 +18235,70 @@ static JSValue js_DrawLine3D(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_DrawPoint3D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     DrawPoint3D(arg0, arg1);
 
 
@@ -12698,23 +18307,103 @@ static JSValue js_DrawPoint3D(JSContext *ctx, JSValueConst this_val, int argc, J
 
 static JSValue js_DrawCircle3D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawCircle3D(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12723,46 +18412,273 @@ static JSValue js_DrawCircle3D(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_DrawTriangle3D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawTriangle3D(arg0, arg1, arg2, arg3);
 
 
     return JS_UNDEFINED;
 }
 
+static JSValue js_DrawTriangleStrip3D(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    JSValue arg0_length_js = JS_GetProperty(ctx, argv[0], JS_ATOM_length);
+	
+	int32_t arg0_length;
+	
+        JS_ToInt32(ctx, &arg0_length, arg0_length_js);
+
+	Vector3 * arg0 = (Vector3 *)malloc(arg0_length*sizeof(Vector3));
+
+	for (int i=0; i < arg0_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
+
+	  Vector3 * obj = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+	  
+	  arg0[i] = *obj;
+	}
+                    
+                        int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    DrawTriangleStrip3D(arg0, arg1, arg2);
+
+
+                    if (arg0)
+        free(arg0);
+                    
+    return JS_UNDEFINED;
+}
+
 static JSValue js_DrawCube(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawCube(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12771,19 +18687,99 @@ static JSValue js_DrawCube(JSContext *ctx, JSValueConst this_val, int argc, JSVa
 
 static JSValue js_DrawCubeV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawCubeV(arg0, arg1, arg2);
 
 
@@ -12792,21 +18788,76 @@ static JSValue js_DrawCubeV(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_DrawCubeWires(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawCubeWires(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12815,19 +18866,99 @@ static JSValue js_DrawCubeWires(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_DrawCubeWiresV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawCubeWiresV(arg0, arg1, arg2);
 
 
@@ -12836,17 +18967,72 @@ static JSValue js_DrawCubeWiresV(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_DrawSphere(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    double arg1;
-    JS_ToFloat64(ctx, &arg1, argv[1]);
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawSphere(arg0, arg1, arg2);
 
 
@@ -12855,21 +19041,76 @@ static JSValue js_DrawSphere(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_DrawSphereEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawSphereEx(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12878,21 +19119,76 @@ static JSValue js_DrawSphereEx(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_DrawSphereWires(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     int arg2;
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawSphereWires(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -12901,11 +19197,36 @@ static JSValue js_DrawSphereWires(JSContext *ctx, JSValueConst this_val, int arg
 
 static JSValue js_DrawCylinder(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -12913,11 +19234,41 @@ static JSValue js_DrawCylinder(JSContext *ctx, JSValueConst this_val, int argc, 
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -12926,25 +19277,105 @@ static JSValue js_DrawCylinder(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_DrawCylinderEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCylinderEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -12953,11 +19384,36 @@ static JSValue js_DrawCylinderEx(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_DrawCylinderWires(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
@@ -12965,11 +19421,41 @@ static JSValue js_DrawCylinderWires(JSContext *ctx, JSValueConst this_val, int a
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCylinderWires(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -12978,25 +19464,105 @@ static JSValue js_DrawCylinderWires(JSContext *ctx, JSValueConst this_val, int a
 
 static JSValue js_DrawCylinderWiresEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCylinderWiresEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13005,25 +19571,105 @@ static JSValue js_DrawCylinderWiresEx(JSContext *ctx, JSValueConst this_val, int
 
 static JSValue js_DrawCapsule(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCapsule(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13032,25 +19678,105 @@ static JSValue js_DrawCapsule(JSContext *ctx, JSValueConst this_val, int argc, J
 
 static JSValue js_DrawCapsuleWires(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
     int arg4;
     JS_ToInt32(ctx, &arg4, argv[4]);
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawCapsuleWires(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13059,19 +19785,94 @@ static JSValue js_DrawCapsuleWires(JSContext *ctx, JSValueConst this_val, int ar
 
 static JSValue js_DrawPlane(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg0 = *argptr0;
-    Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg1 = *argptr1;
-    Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Color arg2 = *argptr2;
 
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Color arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg2.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg2.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg2.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg2.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
     DrawPlane(arg0, arg1, arg2);
 
 
@@ -13084,11 +19885,41 @@ static JSValue js_DrawRay(JSContext *ctx, JSValueConst this_val, int argc, JSVal
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Ray arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     DrawRay(arg0, arg1);
 
 
@@ -13195,17 +20026,72 @@ static JSValue js_DrawModel(JSContext *ctx, JSValueConst this_val, int argc, JSV
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Model arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    double arg2;
-    JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawModel(arg0, arg1, arg2, arg3);
 
 
@@ -13218,25 +20104,130 @@ static JSValue js_DrawModelEx(JSContext *ctx, JSValueConst this_val, int argc, J
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Model arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Vector3 arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg4.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg4.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg4.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawModelEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13249,17 +20240,72 @@ static JSValue js_DrawModelWires(JSContext *ctx, JSValueConst this_val, int argc
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Model arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    double arg2;
-    JS_ToFloat64(ctx, &arg2, argv[2]);
-    Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Color arg3 = *argptr3;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+
+                    Color arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg3.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg3.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg3.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[3], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg3.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr3 = (Color *)JS_GetOpaque2(ctx, argv[3], js_Color_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     DrawModelWires(arg0, arg1, arg2, arg3);
 
 
@@ -13272,25 +20318,130 @@ static JSValue js_DrawModelWiresEx(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Model arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Vector3 arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg4.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg4.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg4.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawModelWiresEx(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13303,11 +20454,41 @@ static JSValue js_DrawBoundingBox(JSContext *ctx, JSValueConst this_val, int arg
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         BoundingBox arg0 = *argptr0;
-    Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Color arg1 = *argptr1;
 
+
+                    Color arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg1.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg1.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg1.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[1], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg1.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr1 = (Color *)JS_GetOpaque2(ctx, argv[1], js_Color_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     DrawBoundingBox(arg0, arg1);
 
 
@@ -13328,17 +20509,72 @@ static JSValue js_DrawBillboard(JSContext *ctx, JSValueConst this_val, int argc,
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    double arg3;
-    JS_ToFloat64(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     DrawBillboard(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -13359,23 +20595,128 @@ static JSValue js_DrawBillboardRec(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg1 = *argptr1;
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg2 = *argptr2;
-    Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg3 = *argptr3;
-    Vector2 * argptr4 = (Vector2 *)JS_GetOpaque2(ctx, argv[4], js_Vector2_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg4 = *argptr4;
-    Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Color arg5 = *argptr5;
 
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector3 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg3.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Vector2 arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg4.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg4.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr4 = (Vector2 *)JS_GetOpaque2(ctx, argv[4], js_Vector2_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Color arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg5.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg5.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[5], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg5.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[5], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg5.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr5 = (Color *)JS_GetOpaque2(ctx, argv[5], js_Color_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
     DrawBillboardRec(arg0, arg1, arg2, arg3, arg4, arg5);
 
 
@@ -13396,34 +20737,196 @@ static JSValue js_DrawBillboardPro(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr1 == NULL) return JS_EXCEPTION;
                     
         Texture2D arg1 = *argptr1;
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Rectangle arg2 = *argptr2;
-    Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg3 = *argptr3;
-    Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg4 = *argptr4;
-    Vector2 * argptr5 = (Vector2 *)JS_GetOpaque2(ctx, argv[5], js_Vector2_class_id);
-        if (argptr5 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg5 = *argptr5;
-    Vector2 * argptr6 = (Vector2 *)JS_GetOpaque2(ctx, argv[6], js_Vector2_class_id);
-        if (argptr6 == NULL) return JS_EXCEPTION;
-                    
-        Vector2 arg6 = *argptr6;
-    double arg7;
-    JS_ToFloat64(ctx, &arg7, argv[7]);
-    Color * argptr8 = (Color *)JS_GetOpaque2(ctx, argv[8], js_Color_class_id);
-        if (argptr8 == NULL) return JS_EXCEPTION;
-                    
-        Color arg8 = *argptr8;
 
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector3 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg3.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Vector3 arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg4.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg4.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg4.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
+
+                    Vector2 arg5;
+
+                    if (JS_IsArray(ctx, argv[5])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[5], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg5.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[5], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg5.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr5 = (Vector2 *)JS_GetOpaque2(ctx, argv[5], js_Vector2_class_id);
+
+                      if (argptr5 == NULL) return JS_EXCEPTION;
+                      
+                      arg5 = *argptr5;
+                    }
+                    
+
+                    Vector2 arg6;
+
+                    if (JS_IsArray(ctx, argv[6])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[6], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg6.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[6], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg6.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr6 = (Vector2 *)JS_GetOpaque2(ctx, argv[6], js_Vector2_class_id);
+
+                      if (argptr6 == NULL) return JS_EXCEPTION;
+                      
+                      arg6 = *argptr6;
+                    }
+                        double arg7;
+    JS_ToFloat64(ctx, &arg7, argv[7]);
+
+
+                    Color arg8;
+
+                    if (JS_IsArray(ctx, argv[8])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[8], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg8.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[8], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg8.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[8], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg8.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[8], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg8.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr8 = (Color *)JS_GetOpaque2(ctx, argv[8], js_Color_class_id);
+
+                      if (argptr8 == NULL) return JS_EXCEPTION;
+                      
+                      arg8 = *argptr8;
+                    }
+                    
     DrawBillboardPro(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_UploadMesh(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Mesh * arg0 = (Mesh *)JS_GetOpaque2(ctx, argv[0], js_Mesh_class_id);
+    JS_BOOL argbool1 = JS_ToBool(ctx, argv[1]);
+    bool arg1 = (bool) argbool1;
+
+    UploadMesh(arg0, arg1);
 
 
     return JS_UNDEFINED;
@@ -13484,6 +20987,47 @@ static JSValue js_DrawMesh(JSContext *ctx, JSValueConst this_val, int argc, JSVa
     return JS_UNDEFINED;
 }
 
+static JSValue js_DrawMeshInstanced(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Mesh * argptr0 = (Mesh *)JS_GetOpaque2(ctx, argv[0], js_Mesh_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Mesh arg0 = *argptr0;
+    Material * argptr1 = (Material *)JS_GetOpaque2(ctx, argv[1], js_Material_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Material arg1 = *argptr1;
+
+
+                    JSValue arg2_length_js = JS_GetProperty(ctx, argv[2], JS_ATOM_length);
+	
+	int32_t arg2_length;
+	
+        JS_ToInt32(ctx, &arg2_length, arg2_length_js);
+
+	Matrix * arg2 = (Matrix *)malloc(arg2_length*sizeof(Matrix));
+
+	for (int i=0; i < arg2_length; ++i) {
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[2], i);
+
+	  Matrix * obj = (Matrix *)JS_GetOpaque2(ctx, argv[2], js_Matrix_class_id);
+	  
+	  arg2[i] = *obj;
+	}
+                    
+                        int arg3;
+    JS_ToInt32(ctx, &arg3, argv[3]);
+
+    DrawMeshInstanced(arg0, arg1, arg2, arg3);
+
+
+                    if (arg2)
+        free(arg2);
+                    
+    return JS_UNDEFINED;
+}
+
 static JSValue js_ExportMesh(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
     Mesh * argptr0 = (Mesh *)JS_GetOpaque2(ctx, argv[0], js_Mesh_class_id);
@@ -13516,6 +21060,16 @@ static JSValue js_GetMeshBoundingBox(JSContext *ctx, JSValueConst this_val, int 
     JS_SetOpaque(ret, ret_ptr);
     return ret;
     
+}
+
+static JSValue js_GenMeshTangents(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Mesh * arg0 = (Mesh *)JS_GetOpaque2(ctx, argv[0], js_Mesh_class_id);
+
+    GenMeshTangents(arg0);
+
+
+    return JS_UNDEFINED;
 }
 
 static JSValue js_GenMeshPoly(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -13717,11 +21271,36 @@ static JSValue js_GenMeshHeightmap(JSContext *ctx, JSValueConst this_val, int ar
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Image arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     Mesh returnVal = GenMeshHeightmap(arg0, arg1);
 
 
@@ -13740,11 +21319,36 @@ static JSValue js_GenMeshCubicmap(JSContext *ctx, JSValueConst this_val, int arg
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Image arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
     Mesh returnVal = GenMeshCubicmap(arg0, arg1);
 
 
@@ -13755,6 +21359,38 @@ static JSValue js_GenMeshCubicmap(JSContext *ctx, JSValueConst this_val, int arg
     JS_SetOpaque(ret, ret_ptr);
     return ret;
     
+}
+
+static JSValue js_LoadMaterials(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+    const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
+
+    JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "materialCount");
+    int arg1;
+    JS_ToInt32(ctx, &arg1, arg1_js);
+
+    Material * materials = LoadMaterials(arg0, &arg1);
+
+    // TODO: how to do the unloading ?
+
+    JS_FreeCString(ctx, arg0);
+
+    JSValue ret = JS_NewArray(ctx);
+
+    for(int i = 0; i < arg1; i++) {
+
+        JSValue obj = JS_NewObjectClass(ctx, js_Material_class_id);
+
+        JS_SetOpaque(obj, &materials[i]);
+        
+        JS_SetPropertyUint32(ctx, ret, i, obj);
+    }
+
+    return ret;
+
+        
 }
 
 static JSValue js_LoadMaterialDefault(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -13793,6 +21429,38 @@ static JSValue js_UnloadMaterial(JSContext *ctx, JSValueConst this_val, int argc
         Material arg0 = *argptr0;
 
     UnloadMaterial(arg0);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_SetMaterialTexture(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Material * arg0 = (Material *)JS_GetOpaque2(ctx, argv[0], js_Material_class_id);
+    int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    Texture2D * argptr2 = (Texture2D *)JS_GetOpaque2(ctx, argv[2], js_Texture2D_class_id);
+        if (argptr2 == NULL)
+        argptr2 = (Texture2D *)JS_GetOpaque2(ctx, argv[2], js_Texture_class_id);
+        if (argptr2 == NULL) return JS_EXCEPTION;
+                    
+        Texture2D arg2 = *argptr2;
+
+    SetMaterialTexture(arg0, arg1, arg2);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_SetModelMeshMaterial(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Model * arg0 = (Model *)JS_GetOpaque2(ctx, argv[0], js_Model_class_id);
+    int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+
+    SetModelMeshMaterial(arg0, arg1, arg2);
 
 
     return JS_UNDEFINED;
@@ -13849,17 +21517,67 @@ static JSValue js_IsModelAnimationValid(JSContext *ctx, JSValueConst this_val, i
 
 static JSValue js_CheckCollisionSpheres(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Vector3 arg0 = *argptr0;
-    double arg1;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
     JS_ToFloat64(ctx, &arg1, argv[1]);
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
                     
-        Vector3 arg2 = *argptr2;
-    double arg3;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        double arg3;
     JS_ToFloat64(ctx, &arg3, argv[3]);
 
     bool ret = CheckCollisionSpheres(arg0, arg1, arg2, arg3);
@@ -13891,11 +21609,36 @@ static JSValue js_CheckCollisionBoxSphere(JSContext *ctx, JSValueConst this_val,
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         BoundingBox arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
 
     bool ret = CheckCollisionBoxSphere(arg0, arg1, arg2);
@@ -13910,11 +21653,36 @@ static JSValue js_GetRayCollisionSphere(JSContext *ctx, JSValueConst this_val, i
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Ray arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
+
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
                     
-        Vector3 arg1 = *argptr1;
-    double arg2;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
 
     RayCollision returnVal = GetRayCollisionSphere(arg0, arg1, arg2);
@@ -13985,19 +21753,94 @@ static JSValue js_GetRayCollisionTriangle(JSContext *ctx, JSValueConst this_val,
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Ray arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg3 = *argptr3;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector3 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg3.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
     RayCollision returnVal = GetRayCollisionTriangle(arg0, arg1, arg2, arg3);
 
 
@@ -14016,23 +21859,123 @@ static JSValue js_GetRayCollisionQuad(JSContext *ctx, JSValueConst this_val, int
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Ray arg0 = *argptr0;
-    Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
-        if (argptr1 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg1 = *argptr1;
-    Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg2 = *argptr2;
-    Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
-        if (argptr3 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg3 = *argptr3;
-    Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Vector3 arg4 = *argptr4;
 
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector3 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg3.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+
+                    Vector3 arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg4.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg4.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg4.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr4 = (Vector3 *)JS_GetOpaque2(ctx, argv[4], js_Vector3_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     RayCollision returnVal = GetRayCollisionQuad(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -14424,6 +22367,36 @@ static JSValue js_WaveCopy(JSContext *ctx, JSValueConst this_val, int argc, JSVa
     JS_SetOpaque(ret, ret_ptr);
     return ret;
     
+}
+
+static JSValue js_WaveCrop(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Wave * arg0 = (Wave *)JS_GetOpaque2(ctx, argv[0], js_Wave_class_id);
+    int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+
+    WaveCrop(arg0, arg1, arg2);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_WaveFormat(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Wave * arg0 = (Wave *)JS_GetOpaque2(ctx, argv[0], js_Wave_class_id);
+    int arg1;
+    JS_ToInt32(ctx, &arg1, argv[1]);
+    int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+    int arg3;
+    JS_ToInt32(ctx, &arg3, argv[3]);
+
+    WaveFormat(arg0, arg1, arg2, arg3);
+
+
+    return JS_UNDEFINED;
 }
 
 static JSValue js_LoadWaveSamples(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -15460,11 +23433,41 @@ static JSValue js_GuiDrawIcon(JSContext *ctx, JSValueConst this_val, int argc, J
     JS_ToInt32(ctx, &arg2, argv[2]);
     int arg3;
     JS_ToInt32(ctx, &arg3, argv[3]);
-    Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
-        if (argptr4 == NULL) return JS_EXCEPTION;
-                    
-        Color arg4 = *argptr4;
 
+
+                    Color arg4;
+
+                    if (JS_IsArray(ctx, argv[4])) {
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[4], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg4.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[4], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg4.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[4], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg4.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[4], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg4.a = (unsigned char)a_int;
+                    }
+                    else {
+
+                      Color * argptr4 = (Color *)JS_GetOpaque2(ctx, argv[4], js_Color_class_id);
+
+                      if (argptr4 == NULL) return JS_EXCEPTION;
+                      
+                      arg4 = *argptr4;
+                    }
+                    
     GuiDrawIcon(arg0, arg1, arg2, arg3, arg4);
 
 
@@ -15473,11 +23476,41 @@ static JSValue js_GuiDrawIcon(JSContext *ctx, JSValueConst this_val, int argc, J
 
 static JSValue js_GuiWindowBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiWindowBox(arg0, arg1);
 
@@ -15488,11 +23521,41 @@ static JSValue js_GuiWindowBox(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_GuiGroupBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiGroupBox(arg0, arg1);
 
@@ -15503,11 +23566,41 @@ static JSValue js_GuiGroupBox(JSContext *ctx, JSValueConst this_val, int argc, J
 
 static JSValue js_GuiLine(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiLine(arg0, arg1);
 
@@ -15518,11 +23611,41 @@ static JSValue js_GuiLine(JSContext *ctx, JSValueConst this_val, int argc, JSVal
 
 static JSValue js_GuiPanel(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiPanel(arg0, arg1);
 
@@ -15583,16 +23706,76 @@ static JSValue js_GuiTabBar(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_GuiScrollPanel(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
-    Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
-        if (argptr2 == NULL) return JS_EXCEPTION;
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
                     
-        Rectangle arg2 = *argptr2;
-    Vector2 * arg3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+
+
+                    Rectangle arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg2.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[2], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg2.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr2 = (Rectangle *)JS_GetOpaque2(ctx, argv[2], js_Rectangle_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                        Vector2 * arg3 = (Vector2 *)JS_GetOpaque2(ctx, argv[3], js_Vector2_class_id);
     Rectangle * arg4 = (Rectangle *)JS_GetOpaque2(ctx, argv[4], js_Rectangle_class_id);
 
     int ret = GuiScrollPanel(arg0, arg1, arg2, arg3, arg4);
@@ -15604,11 +23787,41 @@ static JSValue js_GuiScrollPanel(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_GuiLabel(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiLabel(arg0, arg1);
 
@@ -15619,11 +23832,41 @@ static JSValue js_GuiLabel(JSContext *ctx, JSValueConst this_val, int argc, JSVa
 
 static JSValue js_GuiButton(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiButton(arg0, arg1);
 
@@ -15634,11 +23877,41 @@ static JSValue js_GuiButton(JSContext *ctx, JSValueConst this_val, int argc, JSV
 
 static JSValue js_GuiLabelButton(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiLabelButton(arg0, arg1);
 
@@ -15649,11 +23922,41 @@ static JSValue js_GuiLabelButton(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_GuiToggle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "active");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15669,11 +23972,41 @@ JS_SetPropertyStr(ctx, argv[2], "active", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiToggleGroup(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "active");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15689,11 +24022,41 @@ JS_SetPropertyStr(ctx, argv[2], "active", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiToggleSlider(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "active");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15709,11 +24072,41 @@ JS_SetPropertyStr(ctx, argv[2], "active", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiCheckBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "checked");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15729,11 +24122,41 @@ JS_SetPropertyStr(ctx, argv[2], "checked", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiComboBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "active");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15749,11 +24172,41 @@ JS_SetPropertyStr(ctx, argv[2], "active", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiDropdownBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "active");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15771,11 +24224,41 @@ JS_SetPropertyStr(ctx, argv[2], "active", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiSpinner(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "value");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15797,11 +24280,41 @@ JS_SetPropertyStr(ctx, argv[2], "value", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiValueBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "value");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -15823,11 +24336,41 @@ JS_SetPropertyStr(ctx, argv[2], "value", JS_NewInt32(ctx, arg2_int));
 
 static JSValue js_GuiValueBoxFloat(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "textValue");
     size_t arg2_len;
     const char * arg2_str = JS_ToCStringLen(ctx, &arg2_len, arg2_js);
@@ -15855,11 +24398,41 @@ JS_SetPropertyStr(ctx, argv[3], "value", JS_NewFloat64(ctx, arg3_float));
 
 static JSValue js_GuiTextBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "text");
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "text");
     size_t arg1_len;
     const char * arg1_str = JS_ToCStringLen(ctx, &arg1_len, arg1_js);
     char * arg1 = malloc(arg1_len+1);
@@ -15881,11 +24454,41 @@ static JSValue js_GuiTextBox(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_GuiSlider(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     const char * arg2 = (const char *)JS_ToCString(ctx, argv[2]);
 JSValue arg3_js = JS_GetPropertyStr(ctx, argv[3], "value");
     double arg3_double;
@@ -15908,11 +24511,41 @@ JS_SetPropertyStr(ctx, argv[3], "value", JS_NewFloat64(ctx, arg3_float));
 
 static JSValue js_GuiSliderBar(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     const char * arg2 = (const char *)JS_ToCString(ctx, argv[2]);
 JSValue arg3_js = JS_GetPropertyStr(ctx, argv[3], "value");
     double arg3_double;
@@ -15935,11 +24568,41 @@ JS_SetPropertyStr(ctx, argv[3], "value", JS_NewFloat64(ctx, arg3_float));
 
 static JSValue js_GuiProgressBar(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     const char * arg2 = (const char *)JS_ToCString(ctx, argv[2]);
 JSValue arg3_js = JS_GetPropertyStr(ctx, argv[3], "value");
     double arg3_double;
@@ -15962,11 +24625,41 @@ JS_SetPropertyStr(ctx, argv[3], "value", JS_NewFloat64(ctx, arg3_float));
 
 static JSValue js_GuiStatusBar(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiStatusBar(arg0, arg1);
 
@@ -15977,11 +24670,41 @@ static JSValue js_GuiStatusBar(JSContext *ctx, JSValueConst this_val, int argc, 
 
 static JSValue js_GuiDummyRec(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 
     int ret = GuiDummyRec(arg0, arg1);
 
@@ -15992,11 +24715,41 @@ static JSValue js_GuiDummyRec(JSContext *ctx, JSValueConst this_val, int argc, J
 
 static JSValue js_GuiGrid(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     double arg2;
     JS_ToFloat64(ctx, &arg2, argv[2]);
     int arg3;
@@ -16012,11 +24765,41 @@ static JSValue js_GuiGrid(JSContext *ctx, JSValueConst this_val, int argc, JSVal
 
 static JSValue js_GuiListView(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "scrollIndex");
     int arg2_int;
     JS_ToInt32(ctx, &arg2_int, arg2_js);
@@ -16035,13 +24818,101 @@ JS_SetPropertyStr(ctx, argv[3], "active", JS_NewInt32(ctx, arg3_int));
     return JS_NewInt32(ctx, ret);
 }
 
-static JSValue js_GuiMessageBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+static JSValue js_GuiListViewEx(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+
+        Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
         if (argptr0 == NULL) return JS_EXCEPTION;
                     
         Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+
+	JSValue length_js = JS_GetProperty(ctx, argv[1], JS_ATOM_length);
+	
+	int32_t length;
+	
+        JS_ToInt32(ctx, &length, length_js);
+
+	char ** text = (char **)malloc((length+1)*sizeof(char *));
+
+	text[length] = 0;
+
+	for (int i=0; i < length; ++i) {{
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[1], i);
+
+	  text[i] = JS_ToCString(ctx, val);
+	}}
+	
+    int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+
+    JSValue arg3_js = JS_GetPropertyStr(ctx, argv[3], "scrollIndex");
+    int arg3;
+    JS_ToInt32(ctx, &arg3, arg3_js);
+
+    JSValue arg4_js = JS_GetPropertyStr(ctx, argv[4], "active");
+    int arg4;
+    JS_ToInt32(ctx, &arg4, arg4_js);
+
+    JSValue arg5_js = JS_GetPropertyStr(ctx, argv[5], "focus");
+    int arg5;
+    JS_ToInt32(ctx, &arg5, arg5_js);
+
+    int ret = GuiListViewEx(arg0, text, arg2, &arg3, &arg4, &arg5);
+
+    JS_SetPropertyStr(ctx, argv[3], "scrollIndex", JS_NewInt32(ctx, arg3));
+    JS_SetPropertyStr(ctx, argv[4], "active", JS_NewInt32(ctx, arg4));
+    JS_SetPropertyStr(ctx, argv[5], "focus", JS_NewInt32(ctx, arg5));
+
+    for (int i=0; i < length; ++i) {{
+
+	  JS_FreeCString(ctx, text[i]);
+    }}
+        
+    if (text)
+        free(text);
+
+    return JS_NewInt32(ctx, ret);
+}
+
+static JSValue js_GuiMessageBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     const char * arg2 = (const char *)JS_ToCString(ctx, argv[2]);
     const char * arg3 = (const char *)JS_ToCString(ctx, argv[3]);
 
@@ -16056,11 +24927,41 @@ static JSValue js_GuiMessageBox(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_GuiTextInputBox(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     const char * arg2 = (const char *)JS_ToCString(ctx, argv[2]);
     const char * arg3 = (const char *)JS_ToCString(ctx, argv[3]);
     JSValue arg4_js = JS_GetPropertyStr(ctx, argv[4], "text");
@@ -16091,11 +24992,41 @@ JS_SetPropertyStr(ctx, argv[6], "secretViewActive", JS_NewInt32(ctx, arg6_int));
 
 static JSValue js_GuiColorPicker(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     Color * arg2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
 
     int ret = GuiColorPicker(arg0, arg1, arg2);
@@ -16107,11 +25038,41 @@ static JSValue js_GuiColorPicker(JSContext *ctx, JSValueConst this_val, int argc
 
 static JSValue js_GuiColorPanel(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     Color * arg2 = (Color *)JS_GetOpaque2(ctx, argv[2], js_Color_class_id);
 
     int ret = GuiColorPanel(arg0, arg1, arg2);
@@ -16123,11 +25084,41 @@ static JSValue js_GuiColorPanel(JSContext *ctx, JSValueConst this_val, int argc,
 
 static JSValue js_GuiColorBarAlpha(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "alpha");
     double arg2_double;
     JS_ToFloat64(ctx, &arg2_double, arg2_js);
@@ -16144,11 +25135,41 @@ JS_SetPropertyStr(ctx, argv[2], "alpha", JS_NewFloat64(ctx, arg2_float));
 
 static JSValue js_GuiColorBarHue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
 JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "value");
     double arg2_double;
     JS_ToFloat64(ctx, &arg2_double, arg2_js);
@@ -16165,11 +25186,41 @@ JS_SetPropertyStr(ctx, argv[2], "value", JS_NewFloat64(ctx, arg2_float));
 
 static JSValue js_GuiColorPickerHSV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     Vector3 * arg2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
 
     int ret = GuiColorPickerHSV(arg0, arg1, arg2);
@@ -16181,16 +25232,5059 @@ static JSValue js_GuiColorPickerHSV(JSContext *ctx, JSValueConst this_val, int a
 
 static JSValue js_GuiColorPanelHSV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+                    Rectangle arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
                     
-        Rectangle arg0 = *argptr0;
-    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg0.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[0], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg0.height = (float)h_double;
+                    }
+                    else {
+
+                      Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
     Vector3 * arg2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
 
     int ret = GuiColorPanelHSV(arg0, arg1, arg2);
 
     JS_FreeCString(ctx, arg1);
+
+    return JS_NewInt32(ctx, ret);
+}
+
+
+
+static JSClassID js_float3_class_id;
+
+static JSValue js_float3_get(JSContext *ctx, JSValueConst this_val, int magic)
+{
+    float3 *s = JS_GetOpaque2(ctx, this_val, js_float3_class_id);
+    if (!s)
+        return JS_EXCEPTION;
+
+    
+            
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_float3_set(JSContext *ctx, JSValueConst this_val, JSValue val, int magic)
+{
+    float3 *s = JS_GetOpaque2(ctx, this_val, js_float3_class_id);
+    if (!s)
+        return JS_EXCEPTION;
+
+    
+            
+    
+    return JS_UNDEFINED;
+}
+
+static void js_float3_finalizer(JSRuntime *rt, JSValue val)
+{
+    float3 *s = JS_GetOpaque(val, js_float3_class_id);
+    /* Note: 's' can be NULL in case JS_SetOpaque() was not called */
+    js_free_rt(rt, s);
+}
+
+static JSValue js_float3_ctor(JSContext *ctx,
+                             JSValueConst new_target,
+                             int argc, JSValueConst *argv)
+{
+
+    /*emscripten_log(EM_LOG_CONSOLE, "--> js_float3_ctor: argc=%d", argc);
+
+    for (int i=0; i < argc; ++i) {
+
+      emscripten_log(EM_LOG_CONSOLE, "%d: %d", i, JS_VALUE_GET_TAG(argv[i]));
+    }*/
+    
+    float3 *s;
+    JSValue obj = JS_UNDEFINED;
+    JSValue proto;
+
+    s = js_mallocz(ctx, sizeof(*s));
+    if (!s)
+        return JS_EXCEPTION;
+    
+    /* using new_target to get the prototype is necessary when the
+       class is extended. */
+    
+            
+    proto = JS_GetPropertyStr(ctx, new_target, "prototype");
+    if (JS_IsException(proto))
+        goto fail;
+    obj = JS_NewObjectProtoClass(ctx, proto, js_float3_class_id);
+    JS_FreeValue(ctx, proto);
+    if (JS_IsException(obj))
+        goto fail;
+    JS_SetOpaque(obj, s);
+    return obj;
+ fail:
+    js_free(ctx, s);
+    JS_FreeValue(ctx, obj);
+    return JS_EXCEPTION;
+}
+
+static JSClassDef js_float3_class = {
+    "float3",
+    .finalizer = js_float3_finalizer,
+};
+
+static const JSCFunctionListEntry js_float3_proto_funcs[] = {
+    JS_CGETSET_MAGIC_DEF("v", js_float3_get, js_float3_set, 0),
+
+    /*JS_PROP_STRING_DEF("[Symbol.toStringTag]", "float3", JS_PROP_CONFIGURABLE ),*/
+};
+    
+static int js_declare_float3(JSContext *ctx, JSModuleDef *m)
+{
+    JSValue proto, class;
+
+    /* create the class */
+    JS_NewClassID(&js_float3_class_id);
+    JS_NewClass(JS_GetRuntime(ctx), js_float3_class_id, &js_float3_class);
+
+    proto = JS_NewObject(ctx);
+    JS_SetPropertyFunctionList(ctx, proto, js_float3_proto_funcs, countof(js_float3_proto_funcs));
+
+    class = JS_NewCFunction2(ctx, js_float3_ctor, "float3", 1, JS_CFUNC_constructor, 0);
+    /* set proto.constructor and ctor.prototype */
+    JS_SetConstructor(ctx, class, proto);
+    JS_SetClassProto(ctx, js_float3_class_id, proto);
+
+    JS_SetModuleExport(ctx, m, "float3", class);
+    return 0;
+}
+
+
+
+static JSClassID js_float16_class_id;
+
+static JSValue js_float16_get(JSContext *ctx, JSValueConst this_val, int magic)
+{
+    float16 *s = JS_GetOpaque2(ctx, this_val, js_float16_class_id);
+    if (!s)
+        return JS_EXCEPTION;
+
+    
+            
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_float16_set(JSContext *ctx, JSValueConst this_val, JSValue val, int magic)
+{
+    float16 *s = JS_GetOpaque2(ctx, this_val, js_float16_class_id);
+    if (!s)
+        return JS_EXCEPTION;
+
+    
+            
+    
+    return JS_UNDEFINED;
+}
+
+static void js_float16_finalizer(JSRuntime *rt, JSValue val)
+{
+    float16 *s = JS_GetOpaque(val, js_float16_class_id);
+    /* Note: 's' can be NULL in case JS_SetOpaque() was not called */
+    js_free_rt(rt, s);
+}
+
+static JSValue js_float16_ctor(JSContext *ctx,
+                             JSValueConst new_target,
+                             int argc, JSValueConst *argv)
+{
+
+    /*emscripten_log(EM_LOG_CONSOLE, "--> js_float16_ctor: argc=%d", argc);
+
+    for (int i=0; i < argc; ++i) {
+
+      emscripten_log(EM_LOG_CONSOLE, "%d: %d", i, JS_VALUE_GET_TAG(argv[i]));
+    }*/
+    
+    float16 *s;
+    JSValue obj = JS_UNDEFINED;
+    JSValue proto;
+
+    s = js_mallocz(ctx, sizeof(*s));
+    if (!s)
+        return JS_EXCEPTION;
+    
+    /* using new_target to get the prototype is necessary when the
+       class is extended. */
+    
+            
+    proto = JS_GetPropertyStr(ctx, new_target, "prototype");
+    if (JS_IsException(proto))
+        goto fail;
+    obj = JS_NewObjectProtoClass(ctx, proto, js_float16_class_id);
+    JS_FreeValue(ctx, proto);
+    if (JS_IsException(obj))
+        goto fail;
+    JS_SetOpaque(obj, s);
+    return obj;
+ fail:
+    js_free(ctx, s);
+    JS_FreeValue(ctx, obj);
+    return JS_EXCEPTION;
+}
+
+static JSClassDef js_float16_class = {
+    "float16",
+    .finalizer = js_float16_finalizer,
+};
+
+static const JSCFunctionListEntry js_float16_proto_funcs[] = {
+    JS_CGETSET_MAGIC_DEF("v", js_float16_get, js_float16_set, 0),
+
+    /*JS_PROP_STRING_DEF("[Symbol.toStringTag]", "float16", JS_PROP_CONFIGURABLE ),*/
+};
+    
+static int js_declare_float16(JSContext *ctx, JSModuleDef *m)
+{
+    JSValue proto, class;
+
+    /* create the class */
+    JS_NewClassID(&js_float16_class_id);
+    JS_NewClass(JS_GetRuntime(ctx), js_float16_class_id, &js_float16_class);
+
+    proto = JS_NewObject(ctx);
+    JS_SetPropertyFunctionList(ctx, proto, js_float16_proto_funcs, countof(js_float16_proto_funcs));
+
+    class = JS_NewCFunction2(ctx, js_float16_ctor, "float16", 1, JS_CFUNC_constructor, 0);
+    /* set proto.constructor and ctor.prototype */
+    JS_SetConstructor(ctx, class, proto);
+    JS_SetClassProto(ctx, js_float16_class_id, proto);
+
+    JS_SetModuleExport(ctx, m, "float16", class);
+    return 0;
+}
+
+static JSValue js_Clamp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    float ret = Clamp(arg0, arg1, arg2);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Lerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    float ret = Lerp(arg0, arg1, arg2);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Normalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    float ret = Normalize(arg0, arg1, arg2);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Remap(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+    double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+    double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+
+    float ret = Remap(arg0, arg1, arg2, arg3, arg4);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Wrap(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    float ret = Wrap(arg0, arg1, arg2);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_FloatEquals(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    int ret = FloatEquals(arg0, arg1);
+
+
+    return JS_NewInt32(ctx, ret);
+}
+
+static JSValue js_Vector2Zero(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Vector2 returnVal = Vector2Zero();
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2One(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Vector2 returnVal = Vector2One();
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Add(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector2 returnVal = Vector2Add(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2AddValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector2 returnVal = Vector2AddValue(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Subtract(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector2 returnVal = Vector2Subtract(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2SubtractValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector2 returnVal = Vector2SubtractValue(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Length(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    float ret = Vector2Length(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2LengthSqr(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    float ret = Vector2LengthSqr(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2DotProduct(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector2DotProduct(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2Distance(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector2Distance(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2DistanceSqr(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector2DistanceSqr(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2Angle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector2Angle(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2LineAngle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector2LineAngle(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector2Scale(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector2 returnVal = Vector2Scale(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Multiply(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector2 returnVal = Vector2Multiply(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Negate(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector2 returnVal = Vector2Negate(arg0);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Divide(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector2 returnVal = Vector2Divide(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Normalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector2 returnVal = Vector2Normalize(arg0);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Transform(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Vector2 returnVal = Vector2Transform(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Lerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector2 returnVal = Vector2Lerp(arg0, arg1, arg2);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Reflect(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector2 returnVal = Vector2Reflect(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Rotate(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector2 returnVal = Vector2Rotate(arg0, arg1);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2MoveTowards(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector2 returnVal = Vector2MoveTowards(arg0, arg1, arg2);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Invert(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector2 returnVal = Vector2Invert(arg0);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Clamp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector2 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr2 = (Vector2 *)JS_GetOpaque2(ctx, argv[2], js_Vector2_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    Vector2 returnVal = Vector2Clamp(arg0, arg1, arg2);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2ClampValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector2 returnVal = Vector2ClampValue(arg0, arg1, arg2);
+
+
+    
+    Vector2* ret_ptr = (Vector2 *)js_malloc(ctx, sizeof(Vector2));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector2_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector2Equals(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector2 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr0 = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector2 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+                    }
+                    else {
+
+                      Vector2 * argptr1 = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    int ret = Vector2Equals(arg0, arg1);
+
+
+    return JS_NewInt32(ctx, ret);
+}
+
+static JSValue js_Vector3Zero(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Vector3 returnVal = Vector3Zero();
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3One(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Vector3 returnVal = Vector3One();
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Add(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Add(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3AddValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector3 returnVal = Vector3AddValue(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Subtract(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Subtract(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3SubtractValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector3 returnVal = Vector3SubtractValue(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Scale(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Vector3 returnVal = Vector3Scale(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Multiply(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Multiply(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3CrossProduct(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3CrossProduct(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Perpendicular(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector3 returnVal = Vector3Perpendicular(arg0);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Length(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    float ret = Vector3Length(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3LengthSqr(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    float ret = Vector3LengthSqr(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3DotProduct(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector3DotProduct(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3Distance(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector3Distance(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3DistanceSqr(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector3DistanceSqr(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3Angle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    float ret = Vector3Angle(arg0, arg1);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_Vector3Negate(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector3 returnVal = Vector3Negate(arg0);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Divide(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Divide(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Normalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector3 returnVal = Vector3Normalize(arg0);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Project(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Project(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Reject(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Reject(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3OrthoNormalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Vector3 * arg0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+    Vector3 * arg1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+    Vector3OrthoNormalize(arg0, arg1);
+
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_Vector3Transform(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Vector3 returnVal = Vector3Transform(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3RotateByQuaternion(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    Vector3 returnVal = Vector3RotateByQuaternion(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3RotateByAxisAngle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector3 returnVal = Vector3RotateByAxisAngle(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Lerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector3 returnVal = Vector3Lerp(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Reflect(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Reflect(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Min(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Min(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Max(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Vector3 returnVal = Vector3Max(arg0, arg1);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Barycenter(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+
+                    Vector3 arg3;
+
+                    if (JS_IsArray(ctx, argv[3])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[3], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg3.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[3], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg3.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[3], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg3.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr3 = (Vector3 *)JS_GetOpaque2(ctx, argv[3], js_Vector3_class_id);
+
+                      if (argptr3 == NULL) return JS_EXCEPTION;
+                      
+                      arg3 = *argptr3;
+                    }
+                    
+    Vector3 returnVal = Vector3Barycenter(arg0, arg1, arg2, arg3);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Unproject(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+    Matrix * argptr2 = (Matrix *)JS_GetOpaque2(ctx, argv[2], js_Matrix_class_id);
+        if (argptr2 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg2 = *argptr2;
+
+    Vector3 returnVal = Vector3Unproject(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3ToFloatV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    float3 returnVal = Vector3ToFloatV(arg0);
+
+
+    
+    float3* ret_ptr = (float3 *)js_malloc(ctx, sizeof(float3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_float3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Invert(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Vector3 returnVal = Vector3Invert(arg0);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Clamp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    Vector3 returnVal = Vector3Clamp(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3ClampValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector3 returnVal = Vector3ClampValue(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_Vector3Equals(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    int ret = Vector3Equals(arg0, arg1);
+
+
+    return JS_NewInt32(ctx, ret);
+}
+
+static JSValue js_Vector3Refract(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                        double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Vector3 returnVal = Vector3Refract(arg0, arg1, arg2);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixDeterminant(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    float ret = MatrixDeterminant(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_MatrixTrace(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    float ret = MatrixTrace(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_MatrixTranspose(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    Matrix returnVal = MatrixTranspose(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixInvert(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    Matrix returnVal = MatrixInvert(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixIdentity(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Matrix returnVal = MatrixIdentity();
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixAdd(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+    Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Matrix returnVal = MatrixAdd(arg0, arg1);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixSubtract(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+    Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Matrix returnVal = MatrixSubtract(arg0, arg1);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixMultiply(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+    Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Matrix returnVal = MatrixMultiply(arg0, arg1);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixTranslate(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Matrix returnVal = MatrixTranslate(arg0, arg1, arg2);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotate(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Matrix returnVal = MatrixRotate(arg0, arg1);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotateX(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+
+    Matrix returnVal = MatrixRotateX(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotateY(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+
+    Matrix returnVal = MatrixRotateY(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotateZ(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+
+    Matrix returnVal = MatrixRotateZ(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotateXYZ(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Matrix returnVal = MatrixRotateXYZ(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixRotateZYX(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+    Matrix returnVal = MatrixRotateZYX(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixScale(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Matrix returnVal = MatrixScale(arg0, arg1, arg2);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixFrustum(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+    double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+    double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+    double arg5;
+    JS_ToFloat64(ctx, &arg5, argv[5]);
+
+    Matrix returnVal = MatrixFrustum(arg0, arg1, arg2, arg3, arg4, arg5);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixPerspective(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+    double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+
+    Matrix returnVal = MatrixPerspective(arg0, arg1, arg2, arg3);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixOrtho(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+    double arg3;
+    JS_ToFloat64(ctx, &arg3, argv[3]);
+    double arg4;
+    JS_ToFloat64(ctx, &arg4, argv[4]);
+    double arg5;
+    JS_ToFloat64(ctx, &arg5, argv[5]);
+
+    Matrix returnVal = MatrixOrtho(arg0, arg1, arg2, arg3, arg4, arg5);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixLookAt(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+
+                    Vector3 arg2;
+
+                    if (JS_IsArray(ctx, argv[2])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[2], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg2.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[2], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg2.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[2], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg2.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr2 = (Vector3 *)JS_GetOpaque2(ctx, argv[2], js_Vector3_class_id);
+
+                      if (argptr2 == NULL) return JS_EXCEPTION;
+                      
+                      arg2 = *argptr2;
+                    }
+                    
+    Matrix returnVal = MatrixLookAt(arg0, arg1, arg2);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_MatrixToFloatV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    float16 returnVal = MatrixToFloatV(arg0);
+
+
+    
+    float16* ret_ptr = (float16 *)js_malloc(ctx, sizeof(float16));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_float16_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionAdd(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    Quaternion returnVal = QuaternionAdd(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionAddValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Quaternion returnVal = QuaternionAddValue(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionSubtract(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    Quaternion returnVal = QuaternionSubtract(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionSubtractValue(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Quaternion returnVal = QuaternionSubtractValue(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionIdentity(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+    Quaternion returnVal = QuaternionIdentity();
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionLength(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+
+    float ret = QuaternionLength(arg0);
+
+
+    return JS_NewFloat64(ctx, ret);
+}
+
+static JSValue js_QuaternionNormalize(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+
+    Quaternion returnVal = QuaternionNormalize(arg0);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionInvert(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+
+    Quaternion returnVal = QuaternionInvert(arg0);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionMultiply(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    Quaternion returnVal = QuaternionMultiply(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionScale(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Quaternion returnVal = QuaternionScale(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionDivide(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    Quaternion returnVal = QuaternionDivide(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionLerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Quaternion returnVal = QuaternionLerp(arg0, arg1, arg2);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionNlerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Quaternion returnVal = QuaternionNlerp(arg0, arg1, arg2);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionSlerp(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Quaternion returnVal = QuaternionSlerp(arg0, arg1, arg2);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionFromVector3ToVector3(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                    
+
+                    Vector3 arg1;
+
+                    if (JS_IsArray(ctx, argv[1])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[1], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg1.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[1], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg1.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[1], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg1.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+
+                      if (argptr1 == NULL) return JS_EXCEPTION;
+                      
+                      arg1 = *argptr1;
+                    }
+                    
+    Quaternion returnVal = QuaternionFromVector3ToVector3(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionFromMatrix(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Matrix * argptr0 = (Matrix *)JS_GetOpaque2(ctx, argv[0], js_Matrix_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg0 = *argptr0;
+
+    Quaternion returnVal = QuaternionFromMatrix(arg0);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionToMatrix(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+
+    Matrix returnVal = QuaternionToMatrix(arg0);
+
+
+    
+    Matrix* ret_ptr = (Matrix *)js_malloc(ctx, sizeof(Matrix));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Matrix_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionFromAxisAngle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+                    Vector3 arg0;
+
+                    if (JS_IsArray(ctx, argv[0])) {
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[0], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg0.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[0], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg0.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[0], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg0.z = (float)z_double;
+                    }
+                    else {
+
+                      Vector3 * argptr0 = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+
+                      if (argptr0 == NULL) return JS_EXCEPTION;
+                      
+                      arg0 = *argptr0;
+                    }
+                        double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+
+    Quaternion returnVal = QuaternionFromAxisAngle(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionToAxisAngle(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Vector3 * arg1 = (Vector3 *)JS_GetOpaque2(ctx, argv[1], js_Vector3_class_id);
+JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "outAngle");
+    double arg2_double;
+    JS_ToFloat64(ctx, &arg2_double, arg2_js);
+    float  arg2_float = (float)arg2_double;
+    float * arg2 = &arg2_float;
+                    
+    QuaternionToAxisAngle(arg0, arg1, arg2);
+
+JS_SetPropertyStr(ctx, argv[2], "outAngle", JS_NewFloat64(ctx, arg2_float));
+
+    return JS_UNDEFINED;
+}
+
+static JSValue js_QuaternionFromEuler(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    double arg0;
+    JS_ToFloat64(ctx, &arg0, argv[0]);
+    double arg1;
+    JS_ToFloat64(ctx, &arg1, argv[1]);
+    double arg2;
+    JS_ToFloat64(ctx, &arg2, argv[2]);
+
+    Quaternion returnVal = QuaternionFromEuler(arg0, arg1, arg2);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionToEuler(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+
+    Vector3 returnVal = QuaternionToEuler(arg0);
+
+
+    
+    Vector3* ret_ptr = (Vector3 *)js_malloc(ctx, sizeof(Vector3));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Vector3_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionTransform(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Matrix * argptr1 = (Matrix *)JS_GetOpaque2(ctx, argv[1], js_Matrix_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Matrix arg1 = *argptr1;
+
+    Quaternion returnVal = QuaternionTransform(arg0, arg1);
+
+
+    
+    Quaternion* ret_ptr = (Quaternion *)js_malloc(ctx, sizeof(Quaternion));
+    *ret_ptr = returnVal;
+    JSValue ret = JS_NewObjectClass(ctx, js_Quaternion_class_id);
+    JS_SetOpaque(ret, ret_ptr);
+    return ret;
+    
+}
+
+static JSValue js_QuaternionEquals(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+    Quaternion * argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Quaternion_class_id);
+        if (argptr0 == NULL)
+        argptr0 = (Quaternion *)JS_GetOpaque2(ctx, argv[0], js_Vector4_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg0 = *argptr0;
+    Quaternion * argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Quaternion_class_id);
+        if (argptr1 == NULL)
+        argptr1 = (Quaternion *)JS_GetOpaque2(ctx, argv[1], js_Vector4_class_id);
+        if (argptr1 == NULL) return JS_EXCEPTION;
+                    
+        Quaternion arg1 = *argptr1;
+
+    int ret = QuaternionEquals(arg0, arg1);
+
 
     return JS_NewInt32(ctx, ret);
 }
@@ -16307,7 +30401,7 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("SaveFileData", 3, js_SaveFileData ),
     JS_CFUNC_DEF("ExportDataAsCode", 3, js_ExportDataAsCode ),
     JS_CFUNC_DEF("LoadFileText", 1, js_LoadFileText ),
-    JS_CFUNC_DEF("UnloadFileText", 0, js_UnloadFileText ),
+    JS_CFUNC_DEF("UnloadFileText", 1, js_UnloadFileText ),
     JS_CFUNC_DEF("SaveFileText", 2, js_SaveFileText ),
     JS_CFUNC_DEF("FileExists", 1, js_FileExists ),
     JS_CFUNC_DEF("DirectoryExists", 1, js_DirectoryExists ),
@@ -16394,6 +30488,7 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("DrawLine", 5, js_DrawLine ),
     JS_CFUNC_DEF("DrawLineV", 3, js_DrawLineV ),
     JS_CFUNC_DEF("DrawLineEx", 4, js_DrawLineEx ),
+    JS_CFUNC_DEF("DrawLineStrip", 3, js_DrawLineStrip ),
     JS_CFUNC_DEF("DrawLineBezier", 4, js_DrawLineBezier ),
     JS_CFUNC_DEF("DrawCircle", 4, js_DrawCircle ),
     JS_CFUNC_DEF("DrawCircleSector", 6, js_DrawCircleSector ),
@@ -16419,9 +30514,16 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("DrawRectangleRoundedLines", 5, js_DrawRectangleRoundedLines ),
     JS_CFUNC_DEF("DrawTriangle", 4, js_DrawTriangle ),
     JS_CFUNC_DEF("DrawTriangleLines", 4, js_DrawTriangleLines ),
+    JS_CFUNC_DEF("DrawTriangleFan", 3, js_DrawTriangleFan ),
+    JS_CFUNC_DEF("DrawTriangleStrip", 3, js_DrawTriangleStrip ),
     JS_CFUNC_DEF("DrawPoly", 5, js_DrawPoly ),
     JS_CFUNC_DEF("DrawPolyLines", 5, js_DrawPolyLines ),
     JS_CFUNC_DEF("DrawPolyLinesEx", 6, js_DrawPolyLinesEx ),
+    JS_CFUNC_DEF("DrawSplineLinear", 4, js_DrawSplineLinear ),
+    JS_CFUNC_DEF("DrawSplineBasis", 4, js_DrawSplineBasis ),
+    JS_CFUNC_DEF("DrawSplineCatmullRom", 4, js_DrawSplineCatmullRom ),
+    JS_CFUNC_DEF("DrawSplineBezierQuadratic", 4, js_DrawSplineBezierQuadratic ),
+    JS_CFUNC_DEF("DrawSplineBezierCubic", 4, js_DrawSplineBezierCubic ),
     JS_CFUNC_DEF("DrawSplineSegmentLinear", 4, js_DrawSplineSegmentLinear ),
     JS_CFUNC_DEF("DrawSplineSegmentBasis", 6, js_DrawSplineSegmentBasis ),
     JS_CFUNC_DEF("DrawSplineSegmentCatmullRom", 6, js_DrawSplineSegmentCatmullRom ),
@@ -16438,6 +30540,8 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("CheckCollisionPointRec", 2, js_CheckCollisionPointRec ),
     JS_CFUNC_DEF("CheckCollisionPointCircle", 3, js_CheckCollisionPointCircle ),
     JS_CFUNC_DEF("CheckCollisionPointTriangle", 4, js_CheckCollisionPointTriangle ),
+    JS_CFUNC_DEF("CheckCollisionPointPoly", 3, js_CheckCollisionPointPoly ),
+    JS_CFUNC_DEF("CheckCollisionLines", 5, js_CheckCollisionLines ),
     JS_CFUNC_DEF("CheckCollisionPointLine", 4, js_CheckCollisionPointLine ),
     JS_CFUNC_DEF("GetCollisionRec", 2, js_GetCollisionRec ),
     JS_CFUNC_DEF("LoadImage", 1, js_LoadImage ),
@@ -16473,6 +30577,7 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("UnloadRenderTexture", 1, js_UnloadRenderTexture ),
     JS_CFUNC_DEF("UpdateTexture", 2, js_UpdateTexture ),
     JS_CFUNC_DEF("UpdateTextureRec", 3, js_UpdateTextureRec ),
+    JS_CFUNC_DEF("GenTextureMipmaps", 1, js_GenTextureMipmaps ),
     JS_CFUNC_DEF("SetTextureFilter", 2, js_SetTextureFilter ),
     JS_CFUNC_DEF("SetTextureWrap", 2, js_SetTextureWrap ),
     JS_CFUNC_DEF("DrawTexture", 4, js_DrawTexture ),
@@ -16541,6 +30646,7 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("DrawPoint3D", 2, js_DrawPoint3D ),
     JS_CFUNC_DEF("DrawCircle3D", 5, js_DrawCircle3D ),
     JS_CFUNC_DEF("DrawTriangle3D", 4, js_DrawTriangle3D ),
+    JS_CFUNC_DEF("DrawTriangleStrip3D", 3, js_DrawTriangleStrip3D ),
     JS_CFUNC_DEF("DrawCube", 5, js_DrawCube ),
     JS_CFUNC_DEF("DrawCubeV", 3, js_DrawCubeV ),
     JS_CFUNC_DEF("DrawCubeWires", 5, js_DrawCubeWires ),
@@ -16570,11 +30676,14 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("DrawBillboard", 5, js_DrawBillboard ),
     JS_CFUNC_DEF("DrawBillboardRec", 6, js_DrawBillboardRec ),
     JS_CFUNC_DEF("DrawBillboardPro", 9, js_DrawBillboardPro ),
+    JS_CFUNC_DEF("UploadMesh", 2, js_UploadMesh ),
     JS_CFUNC_DEF("UpdateMeshBuffer", 5, js_UpdateMeshBuffer ),
     JS_CFUNC_DEF("UnloadMesh", 1, js_UnloadMesh ),
     JS_CFUNC_DEF("DrawMesh", 3, js_DrawMesh ),
+    JS_CFUNC_DEF("DrawMeshInstanced", 4, js_DrawMeshInstanced ),
     JS_CFUNC_DEF("ExportMesh", 2, js_ExportMesh ),
     JS_CFUNC_DEF("GetMeshBoundingBox", 1, js_GetMeshBoundingBox ),
+    JS_CFUNC_DEF("GenMeshTangents", 1, js_GenMeshTangents ),
     JS_CFUNC_DEF("GenMeshPoly", 2, js_GenMeshPoly ),
     JS_CFUNC_DEF("GenMeshPlane", 4, js_GenMeshPlane ),
     JS_CFUNC_DEF("GenMeshCube", 3, js_GenMeshCube ),
@@ -16586,9 +30695,12 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("GenMeshKnot", 4, js_GenMeshKnot ),
     JS_CFUNC_DEF("GenMeshHeightmap", 2, js_GenMeshHeightmap ),
     JS_CFUNC_DEF("GenMeshCubicmap", 2, js_GenMeshCubicmap ),
+    JS_CFUNC_DEF("LoadMaterials", 2, js_LoadMaterials ),
     JS_CFUNC_DEF("LoadMaterialDefault", 0, js_LoadMaterialDefault ),
     JS_CFUNC_DEF("IsMaterialReady", 1, js_IsMaterialReady ),
     JS_CFUNC_DEF("UnloadMaterial", 1, js_UnloadMaterial ),
+    JS_CFUNC_DEF("SetMaterialTexture", 3, js_SetMaterialTexture ),
+    JS_CFUNC_DEF("SetModelMeshMaterial", 3, js_SetModelMeshMaterial ),
     JS_CFUNC_DEF("UpdateModelAnimation", 3, js_UpdateModelAnimation ),
     JS_CFUNC_DEF("UnloadModelAnimation", 1, js_UnloadModelAnimation ),
     JS_CFUNC_DEF("IsModelAnimationValid", 2, js_IsModelAnimationValid ),
@@ -16627,6 +30739,8 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("SetSoundPitch", 2, js_SetSoundPitch ),
     JS_CFUNC_DEF("SetSoundPan", 2, js_SetSoundPan ),
     JS_CFUNC_DEF("WaveCopy", 1, js_WaveCopy ),
+    JS_CFUNC_DEF("WaveCrop", 3, js_WaveCrop ),
+    JS_CFUNC_DEF("WaveFormat", 4, js_WaveFormat ),
     JS_CFUNC_DEF("LoadWaveSamples", 1, js_LoadWaveSamples ),
     JS_CFUNC_DEF("LoadMusicStream", 1, js_LoadMusicStream ),
     JS_CFUNC_DEF("LoadMusicStreamFromMemory", 3, js_LoadMusicStreamFromMemory ),
@@ -16717,6 +30831,7 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("GuiDummyRec", 2, js_GuiDummyRec ),
     JS_CFUNC_DEF("GuiGrid", 5, js_GuiGrid ),
     JS_CFUNC_DEF("GuiListView", 4, js_GuiListView ),
+    JS_CFUNC_DEF("GuiListViewEx", 6, js_GuiListViewEx ),
     JS_CFUNC_DEF("GuiMessageBox", 4, js_GuiMessageBox ),
     JS_CFUNC_DEF("GuiTextInputBox", 7, js_GuiTextInputBox ),
     JS_CFUNC_DEF("GuiColorPicker", 3, js_GuiColorPicker ),
@@ -16725,6 +30840,120 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("GuiColorBarHue", 3, js_GuiColorBarHue ),
     JS_CFUNC_DEF("GuiColorPickerHSV", 3, js_GuiColorPickerHSV ),
     JS_CFUNC_DEF("GuiColorPanelHSV", 3, js_GuiColorPanelHSV ),
+    JS_CFUNC_DEF("Clamp", 3, js_Clamp ),
+    JS_CFUNC_DEF("Lerp", 3, js_Lerp ),
+    JS_CFUNC_DEF("Normalize", 3, js_Normalize ),
+    JS_CFUNC_DEF("Remap", 5, js_Remap ),
+    JS_CFUNC_DEF("Wrap", 3, js_Wrap ),
+    JS_CFUNC_DEF("FloatEquals", 2, js_FloatEquals ),
+    JS_CFUNC_DEF("Vector2Zero", 0, js_Vector2Zero ),
+    JS_CFUNC_DEF("Vector2One", 0, js_Vector2One ),
+    JS_CFUNC_DEF("Vector2Add", 2, js_Vector2Add ),
+    JS_CFUNC_DEF("Vector2AddValue", 2, js_Vector2AddValue ),
+    JS_CFUNC_DEF("Vector2Subtract", 2, js_Vector2Subtract ),
+    JS_CFUNC_DEF("Vector2SubtractValue", 2, js_Vector2SubtractValue ),
+    JS_CFUNC_DEF("Vector2Length", 1, js_Vector2Length ),
+    JS_CFUNC_DEF("Vector2LengthSqr", 1, js_Vector2LengthSqr ),
+    JS_CFUNC_DEF("Vector2DotProduct", 2, js_Vector2DotProduct ),
+    JS_CFUNC_DEF("Vector2Distance", 2, js_Vector2Distance ),
+    JS_CFUNC_DEF("Vector2DistanceSqr", 2, js_Vector2DistanceSqr ),
+    JS_CFUNC_DEF("Vector2Angle", 2, js_Vector2Angle ),
+    JS_CFUNC_DEF("Vector2LineAngle", 2, js_Vector2LineAngle ),
+    JS_CFUNC_DEF("Vector2Scale", 2, js_Vector2Scale ),
+    JS_CFUNC_DEF("Vector2Multiply", 2, js_Vector2Multiply ),
+    JS_CFUNC_DEF("Vector2Negate", 1, js_Vector2Negate ),
+    JS_CFUNC_DEF("Vector2Divide", 2, js_Vector2Divide ),
+    JS_CFUNC_DEF("Vector2Normalize", 1, js_Vector2Normalize ),
+    JS_CFUNC_DEF("Vector2Transform", 2, js_Vector2Transform ),
+    JS_CFUNC_DEF("Vector2Lerp", 3, js_Vector2Lerp ),
+    JS_CFUNC_DEF("Vector2Reflect", 2, js_Vector2Reflect ),
+    JS_CFUNC_DEF("Vector2Rotate", 2, js_Vector2Rotate ),
+    JS_CFUNC_DEF("Vector2MoveTowards", 3, js_Vector2MoveTowards ),
+    JS_CFUNC_DEF("Vector2Invert", 1, js_Vector2Invert ),
+    JS_CFUNC_DEF("Vector2Clamp", 3, js_Vector2Clamp ),
+    JS_CFUNC_DEF("Vector2ClampValue", 3, js_Vector2ClampValue ),
+    JS_CFUNC_DEF("Vector2Equals", 2, js_Vector2Equals ),
+    JS_CFUNC_DEF("Vector3Zero", 0, js_Vector3Zero ),
+    JS_CFUNC_DEF("Vector3One", 0, js_Vector3One ),
+    JS_CFUNC_DEF("Vector3Add", 2, js_Vector3Add ),
+    JS_CFUNC_DEF("Vector3AddValue", 2, js_Vector3AddValue ),
+    JS_CFUNC_DEF("Vector3Subtract", 2, js_Vector3Subtract ),
+    JS_CFUNC_DEF("Vector3SubtractValue", 2, js_Vector3SubtractValue ),
+    JS_CFUNC_DEF("Vector3Scale", 2, js_Vector3Scale ),
+    JS_CFUNC_DEF("Vector3Multiply", 2, js_Vector3Multiply ),
+    JS_CFUNC_DEF("Vector3CrossProduct", 2, js_Vector3CrossProduct ),
+    JS_CFUNC_DEF("Vector3Perpendicular", 1, js_Vector3Perpendicular ),
+    JS_CFUNC_DEF("Vector3Length", 1, js_Vector3Length ),
+    JS_CFUNC_DEF("Vector3LengthSqr", 1, js_Vector3LengthSqr ),
+    JS_CFUNC_DEF("Vector3DotProduct", 2, js_Vector3DotProduct ),
+    JS_CFUNC_DEF("Vector3Distance", 2, js_Vector3Distance ),
+    JS_CFUNC_DEF("Vector3DistanceSqr", 2, js_Vector3DistanceSqr ),
+    JS_CFUNC_DEF("Vector3Angle", 2, js_Vector3Angle ),
+    JS_CFUNC_DEF("Vector3Negate", 1, js_Vector3Negate ),
+    JS_CFUNC_DEF("Vector3Divide", 2, js_Vector3Divide ),
+    JS_CFUNC_DEF("Vector3Normalize", 1, js_Vector3Normalize ),
+    JS_CFUNC_DEF("Vector3Project", 2, js_Vector3Project ),
+    JS_CFUNC_DEF("Vector3Reject", 2, js_Vector3Reject ),
+    JS_CFUNC_DEF("Vector3OrthoNormalize", 2, js_Vector3OrthoNormalize ),
+    JS_CFUNC_DEF("Vector3Transform", 2, js_Vector3Transform ),
+    JS_CFUNC_DEF("Vector3RotateByQuaternion", 2, js_Vector3RotateByQuaternion ),
+    JS_CFUNC_DEF("Vector3RotateByAxisAngle", 3, js_Vector3RotateByAxisAngle ),
+    JS_CFUNC_DEF("Vector3Lerp", 3, js_Vector3Lerp ),
+    JS_CFUNC_DEF("Vector3Reflect", 2, js_Vector3Reflect ),
+    JS_CFUNC_DEF("Vector3Min", 2, js_Vector3Min ),
+    JS_CFUNC_DEF("Vector3Max", 2, js_Vector3Max ),
+    JS_CFUNC_DEF("Vector3Barycenter", 4, js_Vector3Barycenter ),
+    JS_CFUNC_DEF("Vector3Unproject", 3, js_Vector3Unproject ),
+    JS_CFUNC_DEF("Vector3ToFloatV", 1, js_Vector3ToFloatV ),
+    JS_CFUNC_DEF("Vector3Invert", 1, js_Vector3Invert ),
+    JS_CFUNC_DEF("Vector3Clamp", 3, js_Vector3Clamp ),
+    JS_CFUNC_DEF("Vector3ClampValue", 3, js_Vector3ClampValue ),
+    JS_CFUNC_DEF("Vector3Equals", 2, js_Vector3Equals ),
+    JS_CFUNC_DEF("Vector3Refract", 3, js_Vector3Refract ),
+    JS_CFUNC_DEF("MatrixDeterminant", 1, js_MatrixDeterminant ),
+    JS_CFUNC_DEF("MatrixTrace", 1, js_MatrixTrace ),
+    JS_CFUNC_DEF("MatrixTranspose", 1, js_MatrixTranspose ),
+    JS_CFUNC_DEF("MatrixInvert", 1, js_MatrixInvert ),
+    JS_CFUNC_DEF("MatrixIdentity", 0, js_MatrixIdentity ),
+    JS_CFUNC_DEF("MatrixAdd", 2, js_MatrixAdd ),
+    JS_CFUNC_DEF("MatrixSubtract", 2, js_MatrixSubtract ),
+    JS_CFUNC_DEF("MatrixMultiply", 2, js_MatrixMultiply ),
+    JS_CFUNC_DEF("MatrixTranslate", 3, js_MatrixTranslate ),
+    JS_CFUNC_DEF("MatrixRotate", 2, js_MatrixRotate ),
+    JS_CFUNC_DEF("MatrixRotateX", 1, js_MatrixRotateX ),
+    JS_CFUNC_DEF("MatrixRotateY", 1, js_MatrixRotateY ),
+    JS_CFUNC_DEF("MatrixRotateZ", 1, js_MatrixRotateZ ),
+    JS_CFUNC_DEF("MatrixRotateXYZ", 1, js_MatrixRotateXYZ ),
+    JS_CFUNC_DEF("MatrixRotateZYX", 1, js_MatrixRotateZYX ),
+    JS_CFUNC_DEF("MatrixScale", 3, js_MatrixScale ),
+    JS_CFUNC_DEF("MatrixFrustum", 6, js_MatrixFrustum ),
+    JS_CFUNC_DEF("MatrixPerspective", 4, js_MatrixPerspective ),
+    JS_CFUNC_DEF("MatrixOrtho", 6, js_MatrixOrtho ),
+    JS_CFUNC_DEF("MatrixLookAt", 3, js_MatrixLookAt ),
+    JS_CFUNC_DEF("MatrixToFloatV", 1, js_MatrixToFloatV ),
+    JS_CFUNC_DEF("QuaternionAdd", 2, js_QuaternionAdd ),
+    JS_CFUNC_DEF("QuaternionAddValue", 2, js_QuaternionAddValue ),
+    JS_CFUNC_DEF("QuaternionSubtract", 2, js_QuaternionSubtract ),
+    JS_CFUNC_DEF("QuaternionSubtractValue", 2, js_QuaternionSubtractValue ),
+    JS_CFUNC_DEF("QuaternionIdentity", 0, js_QuaternionIdentity ),
+    JS_CFUNC_DEF("QuaternionLength", 1, js_QuaternionLength ),
+    JS_CFUNC_DEF("QuaternionNormalize", 1, js_QuaternionNormalize ),
+    JS_CFUNC_DEF("QuaternionInvert", 1, js_QuaternionInvert ),
+    JS_CFUNC_DEF("QuaternionMultiply", 2, js_QuaternionMultiply ),
+    JS_CFUNC_DEF("QuaternionScale", 2, js_QuaternionScale ),
+    JS_CFUNC_DEF("QuaternionDivide", 2, js_QuaternionDivide ),
+    JS_CFUNC_DEF("QuaternionLerp", 3, js_QuaternionLerp ),
+    JS_CFUNC_DEF("QuaternionNlerp", 3, js_QuaternionNlerp ),
+    JS_CFUNC_DEF("QuaternionSlerp", 3, js_QuaternionSlerp ),
+    JS_CFUNC_DEF("QuaternionFromVector3ToVector3", 2, js_QuaternionFromVector3ToVector3 ),
+    JS_CFUNC_DEF("QuaternionFromMatrix", 1, js_QuaternionFromMatrix ),
+    JS_CFUNC_DEF("QuaternionToMatrix", 1, js_QuaternionToMatrix ),
+    JS_CFUNC_DEF("QuaternionFromAxisAngle", 2, js_QuaternionFromAxisAngle ),
+    JS_CFUNC_DEF("QuaternionToAxisAngle", 3, js_QuaternionToAxisAngle ),
+    JS_CFUNC_DEF("QuaternionFromEuler", 3, js_QuaternionFromEuler ),
+    JS_CFUNC_DEF("QuaternionToEuler", 1, js_QuaternionToEuler ),
+    JS_CFUNC_DEF("QuaternionTransform", 2, js_QuaternionTransform ),
+    JS_CFUNC_DEF("QuaternionEquals", 2, js_QuaternionEquals ),
 };
 static int js_raylib_init(JSContext *ctx, JSModuleDef *m)
 {
@@ -16770,6 +30999,8 @@ static int js_raylib_init(JSContext *ctx, JSModuleDef *m)
     js_declare_AutomationEvent(ctx, m);
     js_declare_AutomationEventList(ctx, m);
     js_declare_GuiStyleProp(ctx, m);
+    js_declare_float3(ctx, m);
+    js_declare_float16(ctx, m);
 
     JS_SetModuleExport(ctx, m, "FLAG_VSYNC_HINT", JS_NewInt32(ctx, FLAG_VSYNC_HINT));
     JS_SetModuleExport(ctx, m, "FLAG_FULLSCREEN_MODE", JS_NewInt32(ctx, FLAG_FULLSCREEN_MODE));
@@ -17777,6 +32008,8 @@ JSModuleDef *js_init_module(JSContext *ctx, const char *module_name)
     JS_AddModuleExport(ctx, m, "HUEBAR_PADDING");
     JS_AddModuleExport(ctx, m, "HUEBAR_SELECTOR_HEIGHT");
     JS_AddModuleExport(ctx, m, "HUEBAR_SELECTOR_OVERFLOW");
+    JS_AddModuleExport(ctx, m, "float3");
+    JS_AddModuleExport(ctx, m, "float16");
 
 
     return m;

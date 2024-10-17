@@ -2,10 +2,7 @@ import json
 import sys
 import re
 
-#funcAuthorized = ['InitWindow', 'CloseWindow', 'WindowShouldClose', 'SetTargetFPS', 'BeginDrawing', 'EndDrawing', 'IsWindowReady', 'IsWindowFullscreen', 'IsWindowHidden', 'IsWindowMinimized', 'IsWindowMaximized', 'IsWindowFocused', 'IsWindowResized', 'IsWindowState', 'SetWindowState', 'ClearWindowState', 'ToggleFullscreen', 'ToggleBorderlessWindowed', 'MaximizeWindow', 'MinimizeWindow', 'RestoreWindow', 'LoadImage', 'SetWindowIcon', 'SetWindowTitle', 'SetWindowPosition', 'SetWindowMonitor', 'SetWindowMinSize', 'SetWindowMaxSize', 'SetWindowSize', 'SetWindowOpacity', 'SetWindowOpacity', 'SetWindowFocused', 'GetWindowHandle', 'GetScreenWidth', 'GetScreenHeight', 'GetRenderWidth', 'GetRenderHeight', 'GetMonitorCount', 'GetCurrentMonitor', 'GetMonitorPosition', 'GetMonitorWidth', 'GetMonitorHeight', 'GetMonitorPhysicalWidth', 'GetMonitorPhysicalHeight', 'GetMonitorRefreshRate', 'GetWindowPosition', 'GetWindowScaleDPI', 'GetMonitorName' ]
-#structAuthorized = ['Vector2', 'Image']
-
-funcNotExported = ['UnloadFileData', 'UnloadFileData', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'DrawLineStrip', 'DrawTriangleFan', 'DrawTriangleStrip', 'DrawSplineLinear', 'DrawSplineBasis', 'DrawSplineCatmullRom', 'DrawSplineBezierQuadratic', 'DrawSplineBezierCubic', 'LoadImageColors', 'LoadImagePalette', 'UnloadImageColors', 'UnloadImagePalette', 'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'GenTextureMipmaps', 'TextJoin', 'TextSplit', 'DrawTriangleStrip3D', 'UploadMesh', 'GenMeshTangents', 'LoadMaterials', 'SetMaterialTexture', 'DrawMeshInstanced', 'CheckCollisionPointPoly', 'CheckCollisionLines', 'SetModelMeshMaterial', 'LoadModelAnimations', 'UnloadModelAnimations', 'WaveCrop', 'WaveFormat', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
+funcNotExported = ['UnloadFileData', 'UnloadFileData', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'LoadModelAnimations', 'UnloadModelAnimations', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
 
 RayType = {
     'double': { 'q': 'Float64', 'r': 'double'},
@@ -101,16 +98,96 @@ customCalls = {
     return JS_NewInt32(ctx, ret);''',
         'nb_args': 4
     },
-    'UnloadFileData': {
+    'GuiListViewEx': {
 
-        'call': '''return JS_UNDEFINED;''',
-        'nb_args': 0
-    },
-    'UnloadFileText': {
+        'call': '''
 
-        'call': '''return JS_UNDEFINED;''',
-        'nb_args': 0
+        Rectangle * argptr0 = (Rectangle *)JS_GetOpaque2(ctx, argv[0], js_Rectangle_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Rectangle arg0 = *argptr0;
+
+	JSValue length_js = JS_GetProperty(ctx, argv[1], JS_ATOM_length);
+	
+	int32_t length;
+	
+        JS_ToInt32(ctx, &length, length_js);
+
+	char ** text = (char **)malloc((length+1)*sizeof(char *));
+
+	text[length] = 0;
+
+	for (int i=0; i < length; ++i) {{
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[1], i);
+
+	  text[i] = JS_ToCString(ctx, val);
+	}}
+	
+    int arg2;
+    JS_ToInt32(ctx, &arg2, argv[2]);
+
+    JSValue arg3_js = JS_GetPropertyStr(ctx, argv[3], "scrollIndex");
+    int arg3;
+    JS_ToInt32(ctx, &arg3, arg3_js);
+
+    JSValue arg4_js = JS_GetPropertyStr(ctx, argv[4], "active");
+    int arg4;
+    JS_ToInt32(ctx, &arg4, arg4_js);
+
+    JSValue arg5_js = JS_GetPropertyStr(ctx, argv[5], "focus");
+    int arg5;
+    JS_ToInt32(ctx, &arg5, arg5_js);
+
+    int ret = GuiListViewEx(arg0, text, arg2, &arg3, &arg4, &arg5);
+
+    JS_SetPropertyStr(ctx, argv[3], "scrollIndex", JS_NewInt32(ctx, arg3));
+    JS_SetPropertyStr(ctx, argv[4], "active", JS_NewInt32(ctx, arg4));
+    JS_SetPropertyStr(ctx, argv[5], "focus", JS_NewInt32(ctx, arg5));
+
+    for (int i=0; i < length; ++i) {{
+
+	  JS_FreeCString(ctx, text[i]);
+    }}
+        
+    if (text)
+        free(text);
+
+    return JS_NewInt32(ctx, ret);''',
+        'nb_args': 6
     },
+    'LoadMaterials': {
+
+        'call': '''
+
+    const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
+
+    JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "materialCount");
+    int arg1;
+    JS_ToInt32(ctx, &arg1, arg1_js);
+
+    Material * materials = LoadMaterials(arg0, &arg1);
+
+    // TODO: how to do the unloading ?
+
+    JS_FreeCString(ctx, arg0);
+
+    JSValue ret = JS_NewArray(ctx);
+
+    for(int i = 0; i < arg1; i++) {
+
+        JSValue obj = JS_NewObjectClass(ctx, js_Material_class_id);
+
+        JS_SetOpaque(obj, &materials[i]);
+        
+        JS_SetPropertyUint32(ctx, ret, i, obj);
+    }
+
+    return ret;
+
+        ''',
+        'nb_args': 2
+    }
 }
 
 funcList = ''
@@ -121,6 +198,7 @@ defineDeclare = ''
 
 customTypes = []
 customTypesPtr = {}
+customTypesArr = {}
 
 callbacks = {}
 aliases = {}
@@ -340,6 +418,7 @@ static int js_declare_{0}(JSContext *ctx, JSModuleDef *m)
     customTypes.append(struct['name'])
     customTypesPtr[struct['name'] + " *"] = struct['name']
     customTypesPtr[struct['name'] + "*"] = struct['name']
+    customTypesArr[struct['name'] + "[]"] = struct['name']
     #customTypes.append(struct['name']+' *')
     #customTypes.append(struct['name']+' **')
     #customTypes.append('const '+struct['name']+' *')
@@ -447,6 +526,186 @@ def parseFunc(func):
                     freeCalls += 'JS_SetPropertyStr(ctx, argv[{0}], "{1}", JS_NewInt32(ctx, arg{0}_int));\n'.format(i, p['name'])
                 elif p['type'] == '...':
                     pass
+                
+                elif p['type'] == 'Rectangle':
+
+                    # Rectangle can also be an array
+                    arguments += '''
+
+                    {0} arg{1};
+
+                    if (JS_IsArray(ctx, argv[{1}])) {{
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[{1}], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg{1}.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[{1}], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg{1}.y = (float)y_double;
+                    
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[{1}], 2);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg{1}.width = (float)w_double;
+                    
+                      JSValue h = JS_GetPropertyUint32(ctx, argv[{1}], 3);
+                      double h_double;
+                      JS_ToFloat64(ctx, &h_double, h);
+                      arg{1}.height = (float)h_double;
+                    }}
+                    else {{
+
+                      {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+
+                      if (argptr{1} == NULL) return JS_EXCEPTION;
+                      
+                      arg{1} = *argptr{1};
+                    }}
+                    '''.format(p['type'], i)
+                    
+                elif p['type'] == 'Vector2':
+
+                    # Vector2 can also be an array
+                    arguments += '''
+
+                    {0} arg{1};
+
+                    if (JS_IsArray(ctx, argv[{1}])) {{
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[{1}], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg{1}.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[{1}], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg{1}.y = (float)y_double;
+                    }}
+                    else {{
+
+                      {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+
+                      if (argptr{1} == NULL) return JS_EXCEPTION;
+                      
+                      arg{1} = *argptr{1};
+                    }}
+                    '''.format(p['type'], i)
+                     
+                elif p['type'] == 'Vector3':
+
+                    # Vector3 can also be an array
+                    arguments += '''
+
+                    {0} arg{1};
+
+                    if (JS_IsArray(ctx, argv[{1}])) {{
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[{1}], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg{1}.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[{1}], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg{1}.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[{1}], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg{1}.z = (float)z_double;
+                    }}
+                    else {{
+
+                      {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+
+                      if (argptr{1} == NULL) return JS_EXCEPTION;
+                      
+                      arg{1} = *argptr{1};
+                    }}
+                    '''.format(p['type'], i)
+                    
+                elif p['type'] == 'Vector4':
+
+                    # Vector4 can also be an array
+                    arguments += '''
+
+                    {0} arg{1};
+
+                    if (JS_IsArray(ctx, argv[{1}])) {{
+
+                      JSValue x = JS_GetPropertyUint32(ctx, argv[{1}], 0);
+                      double x_double;
+                      JS_ToFloat64(ctx, &x_double, x);
+                      arg{1}.x = (float)x_double;
+                    
+                      JSValue y = JS_GetPropertyUint32(ctx, argv[{1}], 1);
+                      double y_double;
+                      JS_ToFloat64(ctx, &y_double, y);
+                      arg{1}.y = (float)y_double;
+
+                      JSValue z = JS_GetPropertyUint32(ctx, argv[{1}], 2);
+                      double z_double;
+                      JS_ToFloat64(ctx, &z_double, z);
+                      arg{1}.z = (float)z_double;
+
+                      JSValue w = JS_GetPropertyUint32(ctx, argv[{1}], 3);
+                      double w_double;
+                      JS_ToFloat64(ctx, &w_double, w);
+                      arg{1}.w = (float)w_double;
+                    }}
+                    else {{
+
+                      {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+
+                      if (argptr{1} == NULL) return JS_EXCEPTION;
+                      
+                      arg{1} = *argptr{1};
+                    }}
+                    '''.format(p['type'], i)
+                    
+                elif p['type'] == 'Color':
+
+                    # Color can also be an array
+                    arguments += '''
+
+                    {0} arg{1};
+
+                    if (JS_IsArray(ctx, argv[{1}])) {{
+
+                      JSValue r = JS_GetPropertyUint32(ctx, argv[{1}], 0);
+                      uint32_t r_int;
+                      JS_ToUint32(ctx, &r_int, r);
+                      arg{1}.r = (unsigned char)r_int;
+                    
+                      JSValue g = JS_GetPropertyUint32(ctx, argv[{1}], 1);
+                      uint32_t g_int;
+                      JS_ToUint32(ctx, &g_int, g);
+                      arg{1}.g = (unsigned char)g_int;
+
+                      JSValue b = JS_GetPropertyUint32(ctx, argv[{1}], 2);
+                      uint32_t b_int;
+                      JS_ToUint32(ctx, &b_int, b);
+                      arg{1}.b = (unsigned char)b_int;
+
+                      JSValue a = JS_GetPropertyUint32(ctx, argv[{1}], 3);
+                      uint32_t a_int;
+                      JS_ToUint32(ctx, &a_int, a);
+                      arg{1}.a = (unsigned char)a_int;
+                    }}
+                    else {{
+
+                      {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+
+                      if (argptr{1} == NULL) return JS_EXCEPTION;
+                      
+                      arg{1} = *argptr{1};
+                    }}
+                    '''.format(p['type'], i)
                 elif p['type'] in customTypes:
                     arguments += '''    {0} * argptr{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
 '''.format(p['type'], i)
@@ -468,6 +727,33 @@ def parseFunc(func):
                         arguments += '''        if (arg{1} == NULL)
         arg{1} = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{2}_class_id);
 '''.format(customTypesPtr[p['type']], i, aliases[customTypesPtr[p['type']]])
+                    
+                elif p['type'] in customTypesArr:
+                    arguments += '''
+
+                    JSValue arg{1}_length_js = JS_GetProperty(ctx, argv[{1}], JS_ATOM_length);
+	
+	int32_t arg{1}_length;
+	
+        JS_ToInt32(ctx, &arg{1}_length, arg{1}_length_js);
+
+	{0} * arg{1} = ({0} *)malloc(arg{1}_length*sizeof({0}));
+
+	for (int i=0; i < arg{1}_length; ++i) {{
+
+	  JSValue val = JS_GetPropertyUint32(ctx, argv[{1}], i);
+
+	  {0} * obj = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+	  
+	  arg{1}[i] = *obj;
+	}}
+                    
+                    '''.format(customTypesArr[p['type']], i)
+                    
+                    freeCalls += '''
+                    if (arg{0})
+        free(arg{0});
+                    '''.format(i)
                     
                 elif p['type'] in callbacks:
                     pass
@@ -690,6 +976,8 @@ enum {
 #undef DEF
     JS_ATOM_END,
 };
+
+#include "raymath.h"
 
 #include <emscripten.h>
 

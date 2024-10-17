@@ -1,0 +1,1409 @@
+{
+    "defines": [
+	{
+            "name": "SCROLLBAR_LEFT_SIDE",
+            "type": "INT",
+            "value": 0,
+	    "description": ""
+	},
+	{
+            "name": "SCROLLBAR_RIGHT_SID",
+            "type": "INT",
+            "value": 1,
+	    "description": ""
+	}
+    ],
+    "structs": [
+        {
+	    "name": "GuiStyleProp",
+	    "fields": [
+		{
+		    "type": "unsigned short",
+		    "name": "controlId",
+		    "description": "Control identifier"
+		},
+		{
+		    "type": "unsigned short",
+		    "name": "propertyId",
+		    "description": "Property identifier"
+		},
+		{
+		    "type": "int",
+		    "name": "propertyValue",
+		    "description": "Property value"
+		}
+	    ]
+	}
+    ],
+    "enums": [
+	{
+	    "name": "GuiState",
+	    "values": [
+		{
+		    "name": "STATE_NORMAL",
+		    "value": 0
+		},
+		{
+		    "name": "STATE_FOCUSED",
+		    "value": 1
+		},
+		{
+		    "name": "STATE_PRESSED",
+		    "value": 2
+		},
+		{
+		    "name": "STATE_DISABLED",
+		    "value": 3
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextAlignment",
+	    "values": [
+		{
+		    "name": "TEXT_ALIGN_LEFT",
+		    "value": 0
+		},
+		{
+		    "name": "TEXT_ALIGN_CENTER",
+		    "value": 1
+		},
+		{
+		    "name": "TEXT_ALIGN_RIGHT",
+		    "value": 2
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextAlignmentVerticalt",
+	    "values": [
+		{
+		    "name": "TEXT_ALIGN_TOP",
+		    "value": 0
+		},
+		{
+		    "name": "TEXT_ALIGN_MIDDLE",
+		    "value": 1
+		},
+		{
+		    "name": "TEXT_ALIGN_BOTTOM",
+		    "value": 2
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextWrapMode",
+	    "values": [
+		{
+		    "name": "TEXT_WRAP_NONE",
+		    "value": 0
+		},
+		{
+		    "name": "TEXT_WRAP_CHAR",
+		    "value": 1
+		},
+		{
+		    "name": "TEXT_WRAP_WORD",
+		    "value": 2
+		}
+	    ]
+	},
+	{
+	    "name": "GuiControl",
+	    "values": [
+		{
+		    "name": "DEFAULT",
+		    "value": 0
+		},
+		{
+		    "name": "LABEL",
+		    "value": 1
+		},
+		{
+		    "name": "BUTTON",
+		    "value": 2
+		},
+		{
+		    "name": "TOGGLE",
+		    "value": 3
+		},
+		{
+		    "name": "SLIDER",
+		    "value": 4
+		},
+		{
+		    "name": "PROGRESSBAR",
+		    "value": 5
+		},
+		{
+		    "name": "CHECKBOX",
+		    "value": 6
+		},
+		{
+		    "name": "COMBOBOX",
+		    "value": 7
+		},
+		{
+		    "name": "DROPDOWNBOX",
+		    "value": 8
+		},
+		{
+		    "name": "TEXTBOX",
+		    "value": 9
+		},
+		{
+		    "name": "VALUEBOX",
+		    "value": 10
+		},
+		{
+		    "name": "SPINNER",
+		    "value": 11
+		},
+		{
+		    "name": "LISTVIEW",
+		    "value": 12
+		},
+		{
+		    "name": "COLORPICKER",
+		    "value": 13
+		},
+		{
+		    "name": "SCROLLBAR",
+		    "value": 14
+		},
+		{
+		    "name": "STATUSBAR",
+		    "value": 15
+		}
+	    ]
+	},
+	{
+	    "name": "GuiControlProperty",
+	    "values": [
+		{
+		    "name": "BORDER_COLOR_NORMAL",
+		    "value": 0
+		},
+		{
+		    "name": "BASE_COLOR_NORMAL",
+		    "value": 1
+		},
+		{
+		    "name": "TEXT_COLOR_NORMAL",
+		    "value": 2
+		},
+		{
+		    "name": "BORDER_COLOR_FOCUSED",
+		    "value": 3
+		},
+		{
+		    "name": "BASE_COLOR_FOCUSED",
+		    "value": 4
+		},
+		{
+		    "name": "TEXT_COLOR_FOCUSED",
+		    "value": 5
+		},
+		{
+		    "name": "BORDER_COLOR_PRESSED",
+		    "value": 6
+		},
+		{
+		    "name": "BASE_COLOR_PRESSED",
+		    "value": 7
+		},
+		{
+		    "name": "TEXT_COLOR_PRESSED",
+		    "value": 8
+		},
+		{
+		    "name": "BORDER_COLOR_DISABLED",
+		    "value": 9
+		},
+		{
+		    "name": "BASE_COLOR_DISABLED",
+		    "value": 10
+		},
+		{
+		    "name": "TEXT_COLOR_DISABLED",
+		    "value": 11
+		},
+		{
+		    "name": "BORDER_WIDTH",
+		    "value": 12
+		},
+		{
+		    "name": "TEXT_PADDING",
+		    "value": 13
+		},
+		{
+		    "name": "TEXT_ALIGNMENT",
+		    "value": 14
+		}
+	    ]
+	},
+	{
+	    "name": "GuiDefaultProperty",
+	    "values": [
+		{
+		    "name": "TEXT_SIZE",
+		    "value": 16
+		},
+		{
+		    "name": "TEXT_SPACING",
+		    "value": 17
+		},
+		{
+		    "name": "LINE_COLOR",
+		    "value": 18
+		},
+		{
+		    "name": "BACKGROUND_COLOR",
+		    "value": 19
+		},
+		{
+		    "name": "TEXT_LINE_SPACING",
+		    "value": 20
+		},
+		{
+		    "name": "TEXT_ALIGNMENT_VERTICAL",
+		    "value": 21
+		},
+		{
+		    "name": "TEXT_WRAP_MODE",
+		    "value": 22
+		}
+	    ]
+	},
+	{
+	    "name": "GuiToggleProperty",
+	    "values": [
+		{
+		    "name": "GROUP_PADDING",
+		    "value": 16
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSliderProperty",
+	    "values": [
+		{
+		    "name": "SLIDER_WIDTH",
+		    "value": 16
+		},
+		{
+		    "name": "SLIDER_PADDING",
+		    "value": 17
+		}
+	    ]
+	},
+	{
+	    "name": "GuiProgressBarProperty",
+	    "values": [
+		{
+		    "name": "PROGRESS_PADDING",
+		    "value": 16
+		}
+	    ]
+	},
+	{
+	    "name": "GuiScrollBarProperty",
+	    "values": [
+		{
+		    "name": "ARROWS_SIZE",
+		    "value": 16
+		},
+		{
+		    "name": "ARROWS_VISIBLE",
+		    "value": 17
+		},
+		{
+		    "name": "SCROLL_SLIDER_PADDING",
+		    "value": 18
+		},
+		{
+		    "name": "SCROLL_SLIDER_SIZE",
+		    "value": 19
+		},
+		{
+		    "name": "SCROLL_PADDING",
+		    "value": 20
+		},
+		{
+		    "name": "SCROLL_SPEED",
+		    "value": 21
+		}
+	    ]
+	},
+	{
+	    "name": "GuiCheckBoxProperty",
+	    "values": [
+		{
+		    "name": "CHECK_PADDING",
+		    "value": 16
+		}
+	    ]
+	},
+	{
+	    "name": "GuiComboBoxProperty",
+	    "values": [
+		{
+		    "name": "COMBO_BUTTON_WIDTH",
+		    "value": 16
+		},
+		{
+		    "name": "COMBO_BUTTON_SPACING",
+		    "value": 17
+		}
+	    ]
+	},
+	{
+	    "name": "GuiDropdownBoxProperty",
+	    "values": [
+		{
+		    "name": "ARROW_PADDING",
+		    "value": 16
+		},
+		{
+		    "name": "DROPDOWN_ITEMS_SPACING",
+		    "value": 17
+		},
+		{
+		    "name": "DROPDOWN_ARROW_HIDDEN",
+		    "value": 18
+		},
+		{
+		    "name": "DROPDOWN_ROLL_UP",
+		    "value": 19
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextBoxProperty",
+	    "values": [
+		{
+		    "name": "TEXT_READONLY",
+		    "value": 16
+		}
+	    ]
+	},	
+	{
+	    "name": "GuiSpinnerProperty",
+	    "values": [
+		{
+		    "name": "SPIN_BUTTON_WIDTH",
+		    "value": 16
+		},
+		{
+		    "name": "SPIN_BUTTON_SPACING",
+		    "value": 17
+		}
+	    ]
+	},
+	{
+	    "name": "GuiListViewProperty",
+	    "values": [
+		{
+		    "name": "LIST_ITEMS_HEIGHT",
+		    "value": 16
+		},
+		{
+		    "name": "LIST_ITEMS_SPACING",
+		    "value": 17
+		},
+		{
+		    "name": "SCROLLBAR_WIDTH",
+		    "value": 18
+		},
+		{
+		    "name": "SCROLLBAR_SIDE",
+		    "value": 19
+		},
+		{
+		    "name": "LIST_ITEMS_BORDER_WIDTH",
+		    "value": 20
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorPickerProperty",
+	    "values": [
+		{
+		    "name": "COLOR_SELECTOR_SIZE",
+		    "value": 16
+		},
+		{
+		    "name": "HUEBAR_WIDTH",
+		    "value": 17
+		},
+		{
+		    "name": "HUEBAR_PADDING",
+		    "value": 18
+		},
+		{
+		    "name": "HUEBAR_SELECTOR_HEIGHT",
+		    "value": 19
+		},
+		{
+		    "name": "HUEBAR_SELECTOR_OVERFLOW",
+		    "value": 20
+		}
+	    ]
+	}
+	
+	  
+    ],
+    "aliases": [],
+    "callbacks": [],
+    
+    "functions": [
+	{
+	    "name": "GuiEnable",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiDisable",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiLock",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiUnlock",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiIsLocked",
+	    "returnType": "bool",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiSetAlpha",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "float",
+		    "name": "alpha"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSetState",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "state"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiGetState",
+	    "returnType": "int",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiSetFont",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "Font",
+		    "name": "font"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiGetFont",
+	    "returnType": "Font",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiSetStyle",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "control"
+		},
+		{
+		    "type": "int",
+		    "name": "property"
+		},
+		{
+		    "type": "int",
+		    "name": "value"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiGetStyle",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "control"
+		},
+		{
+		    "type": "int",
+		    "name": "property"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiLoadStyle",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "const char *",
+		    "name": "fileName"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiLoadStyleDefault",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiEnableTooltip",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiDisableTooltip",
+	    "returnType": "void",
+	    "params": [
+		
+	    ]
+	},
+	{
+	    "name": "GuiSetTooltip",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "const char *",
+		    "name": "tooltip"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiIconText",
+	    "returnType": "const char *",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "iconId"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSetIconScale",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "scale"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiLoadIcons",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "const char *",
+		    "name": "fileName"
+		},
+		{
+		    "type": "bool",
+		    "name": "loadIconsName"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiDrawIcon",
+	    "returnType": "void",
+	    "params": [
+		{
+		    "type": "int",
+		    "name": "iconId"
+		},
+		{
+		    "type": "int",
+		    "name": "posX"
+		},
+		{
+		    "type": "int",
+		    "name": "posY"
+		},
+		{
+		    "type": "int",
+		    "name": "pixelSize"
+		},
+		{
+		    "type": "Color",
+		    "name": "color"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiWindowBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "title"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiGroupBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiLine",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiPanel",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTabBar",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char **",
+		    "name": "text"
+		},
+		{
+		    "type": "int",
+		    "name": "count"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiScrollPanel",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "Rectangle",
+		    "name": "content"
+		},
+		{
+		    "type": "Vector2 *",
+		    "name": "scroll"
+		},
+		{
+		    "type": "Rectangle *",
+		    "name": "view"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiLabel",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiButton",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},	
+	{
+
+	    "name": "GuiLabelButton",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+
+	    "name": "GuiToggle",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "bool *",
+		    "name": "active"
+		}
+	    ]
+	},
+	{
+
+	    "name": "GuiToggleGroup",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		}
+	    ]
+	},
+	{
+
+	    "name": "GuiToggleSlider",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		}
+	    ]
+	},	
+	{
+	    "name": "GuiCheckBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "bool *",
+		    "name": "checked"
+		}
+	    ]
+	},
+	{
+
+	    "name": "GuiComboBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		}
+	    ]
+	},
+	{
+
+	    "name": "GuiDropdownBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		},
+		{
+		    "type": "bool",
+		    "name": "editMode"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSpinner",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "value"
+		},
+		{
+		    "type": "int",
+		    "name": "minValue"
+		},
+		{
+		    "type": "int",
+		    "name": "maxValue"
+		},
+		{
+		    "type": "bool",
+		    "name": "editMode"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiValueBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "value"
+		},
+		{
+		    "type": "int",
+		    "name": "minValue"
+		},
+		{
+		    "type": "int",
+		    "name": "maxValue"
+		},
+		{
+		    "type": "bool",
+		    "name": "editMode"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiValueBoxFloat",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "char *",
+		    "name": "textValue"
+		},
+		{
+		    "type": "float *",
+		    "name": "value"
+		},
+		{
+		    "type": "bool",
+		    "name": "editMode"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int",
+		    "name": "textSize"
+		},
+		{
+		    "type": "bool",
+		    "name": "editMode"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSlider",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textLeft"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textRight"
+		},
+		{
+		    "type": "float *",
+		    "name": "value"
+		},
+		{
+		    "type": "float",
+		    "name": "minValue"
+		},
+		{
+		    "type": "float",
+		    "name": "maxValue"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiSliderBar",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textLeft"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textRight"
+		},
+		{
+		    "type": "float *",
+		    "name": "value"
+		},
+		{
+		    "type": "float",
+		    "name": "minValue"
+		},
+		{
+		    "type": "float",
+		    "name": "maxValue"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiProgressBar",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textLeft"
+		},
+		{
+		    "type": "const char *",
+		    "name": "textRight"
+		},
+		{
+		    "type": "float *",
+		    "name": "value"
+		},
+		{
+		    "type": "float",
+		    "name": "minValue"
+		},
+		{
+		    "type": "float",
+		    "name": "maxValue"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiStatusBar",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiDummyRec",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiGrid",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "float",
+		    "name": "spacing"
+		},
+		{
+		    "type": "int",
+		    "name": "subdivs"
+		},
+		{
+		    "type": "Vector2 *",
+		    "name": "mouseCell"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiListView",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int *",
+		    "name": "scrollIndex"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiListViewEx",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char **",
+		    "name": "text"
+		},
+		{
+		    "type": "int",
+		    "name": "count"
+		},
+		{
+		    "type": "int *",
+		    "name": "scrollIndex"
+		},
+		{
+		    "type": "int *",
+		    "name": "active"
+		},
+		{
+		    "type": "int *",
+		    "name": "focus"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiMessageBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "title"
+		},
+		{
+		    "type": "const char *",
+		    "name": "message"
+		},
+		{
+		    "type": "const char *",
+		    "name": "buttons"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiTextInputBox",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "title"
+		},
+		{
+		    "type": "const char *",
+		    "name": "message"
+		},
+		{
+		    "type": "const char *",
+		    "name": "buttons"
+		},
+		{
+		    "type": "char *",
+		    "name": "text"
+		},
+		{
+		    "type": "int",
+		    "name": "textMaxSize"
+		},
+		{
+		    "type": "bool *",
+		    "name": "secretViewActive"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorPicker",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "Color *",
+		    "name": "color"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorPanel",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "Color *",
+		    "name": "color"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorBarAlpha",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "float *",
+		    "name": "alpha"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorBarHue",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "float *",
+		    "name": "value"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorPickerHSV",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "Vector3 *",
+		    "name": "colorHsv"
+		}
+	    ]
+	},
+	{
+	    "name": "GuiColorPanelHSV",
+	    "returnType": "int",
+	    "params": [
+		{
+		    "type": "Rectangle",
+		    "name": "bounds"
+		},
+		{
+		    "type": "const char *",
+		    "name": "text"
+		},
+		{
+		    "type": "Vector3 *",
+		    "name": "colorHsv"
+		}
+	    ]
+	}
+    ]
+}
