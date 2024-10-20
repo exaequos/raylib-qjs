@@ -2,7 +2,7 @@ import json
 import sys
 import re
 
-funcNotExported = ['UnloadFileData', 'UnloadFileData', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'LoadModelAnimations', 'UnloadModelAnimations', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
+funcNotExported = ['UnloadFileData', 'UnloadFileText', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'LoadModelAnimations', 'UnloadModelAnimations', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
 
 RayType = {
     'double': { 'q': 'Float64', 'r': 'double'},
@@ -22,9 +22,10 @@ customCalls = {
 
         'call': '''const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
     size_t data_size1;
-    int * arg1 = (int *)JS_GetArrayBuffer(ctx, &data_size1, argv[1]);
-
+    
     unsigned char * retVal = LoadFileData(arg0, &data_size1);
+
+    JS_SetPropertyStr(ctx, argv[1], "dataSize", JS_NewInt32(ctx, data_size1));
 
     JS_FreeCString(ctx, arg0);
 
@@ -743,7 +744,7 @@ def parseFunc(func):
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[{1}], i);
 
-	  {0} * obj = ({0} *)JS_GetOpaque2(ctx, argv[{1}], js_{0}_class_id);
+	  {0} * obj = ({0} *)JS_GetOpaque2(ctx, val, js_{0}_class_id);
 	  
 	  arg{1}[i] = *obj;
 	}}

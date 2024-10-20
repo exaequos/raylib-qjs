@@ -8642,9 +8642,10 @@ static JSValue js_LoadFileData(JSContext *ctx, JSValueConst this_val, int argc, 
 {
 const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
     size_t data_size1;
-    int * arg1 = (int *)JS_GetArrayBuffer(ctx, &data_size1, argv[1]);
-
+    
     unsigned char * retVal = LoadFileData(arg0, &data_size1);
+
+    JS_SetPropertyStr(ctx, argv[1], "dataSize", JS_NewInt32(ctx, data_size1));
 
     JS_FreeCString(ctx, arg0);
 
@@ -8698,40 +8699,15 @@ const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
     return ret;
 }
 
-static JSValue js_UnloadFileText(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
-{
-    JSValue arg0_js = JS_GetPropertyStr(ctx, argv[0], "text");
-    size_t arg0_len;
-    const char * arg0_str = JS_ToCStringLen(ctx, &arg0_len, arg0_js);
-    char * arg0 = malloc(arg0_len+1);
-    memcpy((void *)arg0, arg0_str, arg0_len);
-    arg0[arg0_len] = 0;
-                
-    UnloadFileText(arg0);
-
-    JS_FreeCString(ctx, arg0_str);
-                JS_SetPropertyStr(ctx, argv[0], "text", JS_NewString(ctx, arg0));
-                free(arg0);
-
-    return JS_UNDEFINED;
-}
-
 static JSValue js_SaveFileText(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
     const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
-    JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "text");
-    size_t arg1_len;
-    const char * arg1_str = JS_ToCStringLen(ctx, &arg1_len, arg1_js);
-    char * arg1 = malloc(arg1_len+1);
-    memcpy((void *)arg1, arg1_str, arg1_len);
-    arg1[arg1_len] = 0;
-                
+    const char * arg1 = (const char *)JS_ToCString(ctx, argv[1]);
+
     bool ret = SaveFileText(arg0, arg1);
 
     JS_FreeCString(ctx, arg0);
-    JS_FreeCString(ctx, arg1_str);
-                JS_SetPropertyStr(ctx, argv[1], "text", JS_NewString(ctx, arg1));
-                free(arg1);
+    JS_FreeCString(ctx, arg1);
 
     return JS_NewBool(ctx, ret);
 }
@@ -10163,7 +10139,7 @@ static JSValue js_DrawLineStrip(JSContext *ctx, JSValueConst this_val, int argc,
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12243,7 +12219,7 @@ static JSValue js_DrawTriangleFan(JSContext *ctx, JSValueConst this_val, int arg
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12310,7 +12286,7 @@ static JSValue js_DrawTriangleStrip(JSContext *ctx, JSValueConst this_val, int a
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12598,7 +12574,7 @@ static JSValue js_DrawSplineLinear(JSContext *ctx, JSValueConst this_val, int ar
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12667,7 +12643,7 @@ static JSValue js_DrawSplineBasis(JSContext *ctx, JSValueConst this_val, int arg
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12736,7 +12712,7 @@ static JSValue js_DrawSplineCatmullRom(JSContext *ctx, JSValueConst this_val, in
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12805,7 +12781,7 @@ static JSValue js_DrawSplineBezierQuadratic(JSContext *ctx, JSValueConst this_va
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -12874,7 +12850,7 @@ static JSValue js_DrawSplineBezierCubic(JSContext *ctx, JSValueConst this_val, i
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[0], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -14531,7 +14507,7 @@ static JSValue js_CheckCollisionPointPoly(JSContext *ctx, JSValueConst this_val,
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[1], i);
 
-	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, argv[1], js_Vector2_class_id);
+	  Vector2 * obj = (Vector2 *)JS_GetOpaque2(ctx, val, js_Vector2_class_id);
 	  
 	  arg1[i] = *obj;
 	}
@@ -18556,7 +18532,7 @@ static JSValue js_DrawTriangleStrip3D(JSContext *ctx, JSValueConst this_val, int
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[0], i);
 
-	  Vector3 * obj = (Vector3 *)JS_GetOpaque2(ctx, argv[0], js_Vector3_class_id);
+	  Vector3 * obj = (Vector3 *)JS_GetOpaque2(ctx, val, js_Vector3_class_id);
 	  
 	  arg0[i] = *obj;
 	}
@@ -21011,7 +20987,7 @@ static JSValue js_DrawMeshInstanced(JSContext *ctx, JSValueConst this_val, int a
 
 	  JSValue val = JS_GetPropertyUint32(ctx, argv[2], i);
 
-	  Matrix * obj = (Matrix *)JS_GetOpaque2(ctx, argv[2], js_Matrix_class_id);
+	  Matrix * obj = (Matrix *)JS_GetOpaque2(ctx, val, js_Matrix_class_id);
 	  
 	  arg2[i] = *obj;
 	}
@@ -30401,7 +30377,6 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("SaveFileData", 3, js_SaveFileData ),
     JS_CFUNC_DEF("ExportDataAsCode", 3, js_ExportDataAsCode ),
     JS_CFUNC_DEF("LoadFileText", 1, js_LoadFileText ),
-    JS_CFUNC_DEF("UnloadFileText", 1, js_UnloadFileText ),
     JS_CFUNC_DEF("SaveFileText", 2, js_SaveFileText ),
     JS_CFUNC_DEF("FileExists", 1, js_FileExists ),
     JS_CFUNC_DEF("DirectoryExists", 1, js_DirectoryExists ),
