@@ -9890,6 +9890,29 @@
       ]
     },
     {
+      "name": "SetModelMaterialTexture",
+      "description": "Set the texture of a material of a model",
+      "returnType": "voiod",
+      "params": [
+        {
+          "type": "Model",
+          "name": "model"
+        },
+	{
+          "type": "int",
+          "name": "material"
+        },
+	{
+          "type": "int",
+          "name": "map"
+        },
+	{
+          "type": "Texture",
+          "name": "texture"
+        }
+      ]
+    },
+    {
       "name": "GetModelBoundingBox",
       "description": "Compute model bounding box limits (considers all meshes)",
       "returnType": "BoundingBox",
@@ -10596,7 +10619,7 @@
       "returnType": "void",
       "params": [
         {
-          "type": "ModelAnimation *",
+          "type": "ModelAnimation[]",
           "name": "animations"
         },
         {

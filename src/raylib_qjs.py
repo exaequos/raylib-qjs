@@ -2,7 +2,7 @@ import json
 import sys
 import re
 
-funcNotExported = ['UnloadFileData', 'UnloadFileText', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'LoadModelAnimations', 'UnloadModelAnimations', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
+funcNotExported = ['UnloadFileData', 'UnloadFileText', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
 
 RayType = {
     'double': { 'q': 'Float64', 'r': 'double'},
@@ -29,9 +29,15 @@ customCalls = {
 
     JS_FreeCString(ctx, arg0);
 
-    JSValue ret = JS_NewArrayBufferCopy(ctx, (const uint8_t*)retVal, data_size1);
+    JSValue ret = JS_NULL;
 
-    UnloadFileData(retVal);
+    if (retVal) {
+
+        ret = JS_NewArrayBufferCopy(ctx, (const uint8_t*)retVal, data_size1);
+
+        UnloadFileData(retVal);
+    }
+        
     return ret;''',
         'nb_args': 2
     },
@@ -43,9 +49,15 @@ customCalls = {
 
     JS_FreeCString(ctx, arg0);
 
-    JSValue ret = JS_NewString(ctx, retVal);
+    JSValue ret = JS_NULL;
 
-    UnloadFileText(retVal);
+    if (retVal) {
+
+        ret = JS_NewString(ctx, retVal);
+
+        UnloadFileText(retVal);
+    }
+    
     return ret;''',
         'nb_args': 1
     },
@@ -188,7 +200,125 @@ customCalls = {
 
         ''',
         'nb_args': 2
-    }
+    },
+    'LoadModelAnimations' : {
+
+        'call': '''
+
+           const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
+
+           JSValue arg1_js = JS_GetPropertyStr(ctx, argv[1], "animCount");
+           int arg1_int;
+           JS_ToInt32(ctx, &arg1_int, arg1_js);
+           int * arg1 = &arg1_int;
+
+           ModelAnimation * res = LoadModelAnimations(arg0, arg1);
+
+           JS_FreeCString(ctx, arg0);
+           JS_SetPropertyStr(ctx, argv[1], "animCount", JS_NewInt32(ctx, arg1_int));
+
+           if (!res) {
+               return JS_UNDEFINED;
+           }
+           else {
+
+              JSValue ret = JS_NewArray(ctx);
+              for(int i=0; i < arg1_int; i++){
+
+                  JSValue ma = JS_NewObjectClass(ctx, js_ModelAnimation_class_id);
+                  JS_SetOpaque(ma, res+i);
+                  JS_SetPropertyUint32(ctx, ret, i, ma);
+              }
+               return ret;   
+           }
+
+        ''',
+        'nb_args': 2
+    },
+    'UnloadModelAnimations' : {
+
+        'call': '''
+
+             JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
+
+	     ModelAnimation * ptr = (ModelAnimation *)JS_GetOpaque2(ctx, val, js_ModelAnimation_class_id);   
+
+             int arg1;
+             JS_ToInt32(ctx, &arg1, argv[1]);
+        
+             UnloadModelAnimations(ptr, arg1);
+
+             return JS_UNDEFINED;
+        ''',
+        'nb_args': 2
+    },
+    'SetModelMaterialTexture': {
+
+        'call': '''
+
+             Model * argptr0 = (Model *)JS_GetOpaque2(ctx, argv[0], js_Model_class_id);
+
+             int arg1;
+             JS_ToInt32(ctx, &arg1, argv[1]);
+
+             int arg2;
+             JS_ToInt32(ctx, &arg2, argv[2]);
+
+             Texture * argptr3 = (Texture *)JS_GetOpaque2(ctx, argv[3], js_Texture2D_class_id);
+
+             if (!argptr3)
+                 (Texture *)JS_GetOpaque2(ctx, argv[3], js_Texture_class_id);
+             
+             argptr0->materials[arg1].maps[arg2].texture = *argptr3;
+        
+             return JS_UNDEFINED;
+        ''',
+        'nb_args': 4
+    },
+    'SetShaderValue': {
+
+        'call': '''
+        Shader * argptr0 = (Shader *)JS_GetOpaque2(ctx, argv[0], js_Shader_class_id);
+        if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+        Shader arg0 = *argptr0;
+  
+        int arg1;
+        JS_ToInt32(ctx, &arg1, argv[1]);
+
+        int arg3;
+        JS_ToInt32(ctx, &arg3, argv[3]);
+
+        switch(arg3) {
+
+          case 0: //float
+          {
+
+            double arg2_double;
+            JS_ToFloat64(ctx, &arg2_double, argv[2]);
+
+            float arg2 = (float)arg2_double;
+            SetShaderValue(arg0, arg1, (const void *)&arg2, arg3);
+            
+            break;
+          }
+
+          case 4: //int
+          {
+            int arg2;
+            JS_ToInt32(ctx, &arg2, argv[2]);
+            
+            SetShaderValue(arg0, arg1, (const void *)&arg2, arg3);
+            
+            break;
+          }
+        }
+
+        return JS_UNDEFINED;
+    
+        ''',
+        'nb_args': 4
+    },
 }
 
 funcList = ''
@@ -203,6 +333,8 @@ customTypesArr = {}
 
 callbacks = {}
 aliases = {}
+
+allEnums = []
 
 def parseStruct(struct, type = None):
 
@@ -484,18 +616,18 @@ def parseFunc(func):
                 free(arg{0});\n'''.format(i, p['name'])
                 elif p['type'] == 'const char *':
                     #arguments += 'const char * arg{0} = ((struct JSString *)JS_VALUE_GET_PTR(argv[0]))->u.str8;'.format(i)
-                    arguments += '    const char * arg{0} = (const char *)JS_ToCString(ctx, argv[{0}]);\n'.format(i)
-                    freeCalls += '    JS_FreeCString(ctx, arg{0});\n'.format(i)
+                    arguments += '    const char * arg{0} = (JS_IsNull(argv[{0}]) || JS_IsUndefined(argv[{0}]))?NULL:(const char *)JS_ToCString(ctx, argv[{0}]);\n'.format(i)
+                    freeCalls += '    if (arg{0}) JS_FreeCString(ctx, arg{0});\n'.format(i)
                 elif p['type'] == 'const char **':
                     arguments += 'size_t data_size{0};\n    const char ** arg{0} = (const char **)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
                 elif p['type'] == 'unsigned char *':
-                    arguments += 'size_t data_size{0};\n    unsigned char * arg{0} = (unsigned char *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
+                    arguments += 'size_t data_size{0};\n    unsigned char * arg{0} = (JS_IsNull(argv[{0}]) || JS_IsUndefined(argv[{0}]))?NULL:(unsigned char *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
                 elif p['type'] == 'const unsigned char *':
-                    arguments += 'size_t data_size{0};\n    const unsigned char * arg{0} = (const unsigned char *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
+                    arguments += 'size_t data_size{0};\n    const unsigned char * arg{0} = (JS_IsNull(argv[{0}]) || JS_IsUndefined(argv[{0}]))?NULL:(const unsigned char *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
                 elif p['type'] == 'const void *':
-                    arguments += 'size_t data_size{0};\n    const void * arg{0} = (const void *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
+                    arguments += 'size_t data_size{0};\n    const void * arg{0} = (JS_IsNull(argv[{0}]) || JS_IsUndefined(argv[{0}]))?NULL:(const void *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
                 elif p['type'] == 'void *':
-                    arguments += 'size_t data_size{0};\n    void * arg{0} = (void *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
+                    arguments += 'size_t data_size{0};\n    void * arg{0} = (JS_IsNull(argv[{0}]) || JS_IsUndefined(argv[{0}]))?NULL:(void *)JS_GetArrayBuffer(ctx, &data_size{0}, argv[{0}]);\n'.format(i)
                 elif p['type'] == 'int *':
                     arguments += '''JSValue arg{0}_js = JS_GetPropertyStr(ctx, argv[{0}], "{1}");
     int arg{0}_int;
@@ -872,12 +1004,17 @@ def parseEnum(enum):
 
     global enumDeclare
     global symbolList
+    global allEnums
 
     if 'values' in enum:
         for v in enum['values']:
 
-            enumDeclare += '    JS_SetModuleExport(ctx, m, "{0}", JS_NewInt32(ctx, {0}));\n'.format(v['name'], v['value'])
-            symbolList += '    JS_AddModuleExport(ctx, m, "{0}");\n'.format(v['name'])
+            if v['name'] not in allEnums:
+
+                allEnums.append(v['name']);
+                
+                enumDeclare += '    JS_SetModuleExport(ctx, m, "{0}", JS_NewInt32(ctx, {0}));\n'.format(v['name'], v['value'])
+                symbolList += '    JS_AddModuleExport(ctx, m, "{0}");\n'.format(v['name'])
 
 def parseDefine(define):
 
