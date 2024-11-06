@@ -2,7 +2,7 @@ import json
 import sys
 import re
 
-funcNotExported = ['UnloadFileData', 'UnloadFileText', 'UnloadImageColors', 'UnloadImagePalette', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadImageColors', 'LoadImagePalette',  'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
+funcNotExported = ['UnloadFileData', 'UnloadFileText', 'SetWindowIcons', 'TraceLog', 'SetTraceLogCallback', 'SetLoadFileDataCallback', 'SetSaveFileDataCallback', 'SetLoadFileTextCallback', 'SetSaveFileTextCallback', 'LoadFontData', 'GenImageFontAtlas', 'UnloadFontData', 'TextFormat', 'TextJoin', 'TextSplit', 'SetAudioStreamCallback', 'AttachAudioStreamProcessor', 'DetachAudioStreamProcessor', 'AttachAudioMixedProcessor', 'DetachAudioMixedProcessor', 'UnloadWaveSamples' ]
 
 RayType = {
     'double': { 'q': 'Float64', 'r': 'double'},
@@ -38,7 +38,8 @@ customCalls = {
         UnloadFileData(retVal);
     }
         
-    return ret;''',
+    return ret;
+        ''',
         'nb_args': 2
     },
     'LoadFileText': {
@@ -196,6 +197,8 @@ customCalls = {
         JS_SetPropertyUint32(ctx, ret, i, obj);
     }
 
+    JS_SetPropertyStr(ctx, argv[1], "materialCount", JS_NewInt32(ctx, arg1));
+
     return ret;
 
         ''',
@@ -239,6 +242,7 @@ customCalls = {
 
         'call': '''
 
+             // Get pointer to first element
              JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
 
 	     ModelAnimation * ptr = (ModelAnimation *)JS_GetOpaque2(ctx, val, js_ModelAnimation_class_id);   
@@ -319,6 +323,114 @@ customCalls = {
         ''',
         'nb_args': 4
     },
+    'LoadImageColors': {
+
+        'call': '''
+            Image * argptr0 = (Image *)JS_GetOpaque2(ctx, argv[0], js_Image_class_id);
+            if (argptr0 == NULL) return JS_EXCEPTION;
+
+            Color * colors = LoadImageColors(*argptr0);
+
+            JSValue ret = JS_NewArray(ctx);
+
+            for(int i = 0; i < argptr0->width*argptr0->height; i++) {
+
+               JSValue col = JS_NewObjectClass(ctx, js_Color_class_id);
+               JS_SetOpaque(col, &colors[i]);
+        
+               JS_SetPropertyUint32(ctx, ret, i, col);
+            }
+
+            return ret;
+        ''',
+        'nb_args': 1
+    },
+    'UnloadImageColors': {
+
+        'call': '''
+
+            // Get pointer to first element
+            JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
+
+	    Color * ptr = (Color *)JS_GetOpaque2(ctx, val, js_Color_class_id);
+        
+            UnloadImageColors(ptr);
+
+            return JS_UNDEFINED;
+        ''',
+        'nb_args': 1
+    },
+    'LoadImagePalette': {
+
+        'call': '''
+            Image * argptr0 = (Image *)JS_GetOpaque2(ctx, argv[0], js_Image_class_id);
+            if (argptr0 == NULL) return JS_EXCEPTION;
+
+            int arg1;
+            JS_ToInt32(ctx, &arg1, argv[1]);
+
+            JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "colorCount");
+            int arg2;
+            JS_ToInt32(ctx, &arg2, arg2_js);
+
+            Color * colors = LoadImagePalette(*argptr0, arg1, &arg2);
+
+            JSValue ret = JS_NewArray(ctx);
+
+            for(int i = 0; i < arg2; i++) {
+
+               JSValue col = JS_NewObjectClass(ctx, js_Color_class_id);
+               JS_SetOpaque(col, &colors[i]);
+        
+               JS_SetPropertyUint32(ctx, ret, i, col);
+            }
+
+            JS_SetPropertyStr(ctx, argv[2], "colorCount", JS_NewInt32(ctx, arg2));
+
+            return ret;
+        ''',
+        'nb_args': 3
+    },
+    'UnloadImagePalette': {
+
+        'call': '''
+
+            // Get pointer to first element
+            JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
+            
+	    Color * ptr = (Color *)JS_GetOpaque2(ctx, val, js_Color_class_id);
+        
+            UnloadImagePalette(ptr);
+
+            return JS_UNDEFINED;
+        ''',
+        'nb_args': 1
+    },
+    'LoadWaveSamples': {
+
+        'call': '''
+
+           Wave * argptr0 = (Wave *)JS_GetOpaque2(ctx, argv[0], js_Wave_class_id);
+           if (argptr0 == NULL) return JS_EXCEPTION;
+                    
+           Wave arg0 = *argptr0;
+
+           float * retVal = LoadWaveSamples(arg0);
+           
+           JSValue ret = JS_NULL;
+
+           if (retVal) {
+
+               ret = JS_NewArrayBufferCopy(ctx, (const uint8_t*)retVal, argptr0->frameCount*argptr0->channels*sizeof(float));
+
+               UnloadWaveSamples(retVal);
+           }
+        
+           return ret;
+        ''',
+        'nb_args': 1
+    },
+    
 }
 
 funcList = ''

@@ -7490,7 +7490,7 @@
     {
       "name": "LoadImageColors",
       "description": "Load color data from image as a Color array (RGBA - 32bit)",
-      "returnType": "Color *",
+      "returnType": "Color[]",
       "params": [
         {
           "type": "Image",
@@ -7501,7 +7501,7 @@
     {
       "name": "LoadImagePalette",
       "description": "Load colors palette from image as a Color array (RGBA - 32bit)",
-      "returnType": "Color *",
+      "returnType": "Color[]",
       "params": [
         {
           "type": "Image",
@@ -7523,7 +7523,7 @@
       "returnType": "void",
       "params": [
         {
-          "type": "Color *",
+          "type": "Color[]",
           "name": "colors"
         }
       ]
@@ -7534,7 +7534,7 @@
       "returnType": "void",
       "params": [
         {
-          "type": "Color *",
+          "type": "Color[]",
           "name": "colors"
         }
       ]
@@ -11157,7 +11157,7 @@
     {
       "name": "LoadWaveSamples",
       "description": "Load samples data from wave as a 32bit float data array",
-      "returnType": "float *",
+      "returnType": "float[]",
       "params": [
         {
           "type": "Wave",
@@ -11171,7 +11171,7 @@
       "returnType": "void",
       "params": [
         {
-          "type": "float *",
+          "type": "float[]",
           "name": "samples"
         }
       ]

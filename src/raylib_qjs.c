@@ -4079,9 +4079,6 @@ static JSValue js_Shader_get(JSContext *ctx, JSValueConst this_val, int magic)
     if (!s)
         return JS_EXCEPTION;
 
-    //BB
-    emscripten_log(EM_LOG_CONSOLE, "js_Shader_get: %d", magic);
-
     
 if (magic == 0) {
     return JS_NewUint32(ctx, (unsigned int) s->id);
@@ -4098,8 +4095,6 @@ static JSValue js_Shader_set(JSContext *ctx, JSValueConst this_val, JSValue val,
     if (!s)
         return JS_EXCEPTION;
 
-    //BB
-    emscripten_log(EM_LOG_CONSOLE, "js_Shader_set: %d", magic);
     
 if (magic == 0) {
     unsigned int v0;
@@ -8084,7 +8079,7 @@ static JSValue js_SetShaderValue(JSContext *ctx, JSValueConst this_val, int argc
 
         int arg3;
         JS_ToInt32(ctx, &arg3, argv[3]);
-	
+
         switch(arg3) {
 
           case 0: //float
@@ -8108,12 +8103,11 @@ static JSValue js_SetShaderValue(JSContext *ctx, JSValueConst this_val, int argc
             
             break;
           }
-
-	default:
-	  break;
         }
-    
+
         return JS_UNDEFINED;
+    
+        
 }
 
 static JSValue js_SetShaderValueV(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -8690,6 +8684,7 @@ const char * arg0 = (const char *)JS_ToCString(ctx, argv[0]);
     }
         
     return ret;
+        
 }
 
 static JSValue js_SaveFileData(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
@@ -15557,6 +15552,89 @@ static JSValue js_GenImageText(JSContext *ctx, JSValueConst this_val, int argc, 
     
 }
 
+static JSValue js_LoadImageColors(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+            Image * argptr0 = (Image *)JS_GetOpaque2(ctx, argv[0], js_Image_class_id);
+            if (argptr0 == NULL) return JS_EXCEPTION;
+
+            Color * colors = LoadImageColors(*argptr0);
+
+            JSValue ret = JS_NewArray(ctx);
+
+            for(int i = 0; i < argptr0->width*argptr0->height; i++) {
+
+               JSValue col = JS_NewObjectClass(ctx, js_Color_class_id);
+               JS_SetOpaque(col, &colors[i]);
+        
+               JS_SetPropertyUint32(ctx, ret, i, col);
+            }
+
+            return ret;
+        
+}
+
+static JSValue js_LoadImagePalette(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+            Image * argptr0 = (Image *)JS_GetOpaque2(ctx, argv[0], js_Image_class_id);
+            if (argptr0 == NULL) return JS_EXCEPTION;
+
+            int arg1;
+            JS_ToInt32(ctx, &arg1, argv[1]);
+
+            JSValue arg2_js = JS_GetPropertyStr(ctx, argv[2], "colorCount");
+            int arg2;
+            JS_ToInt32(ctx, &arg2, arg2_js);
+
+            Color * colors = LoadImagePalette(*argptr0, arg1, &arg2);
+
+            JSValue ret = JS_NewArray(ctx);
+
+            for(int i = 0; i < arg2; i++) {
+
+               JSValue col = JS_NewObjectClass(ctx, js_Color_class_id);
+               JS_SetOpaque(col, &colors[i]);
+        
+               JS_SetPropertyUint32(ctx, ret, i, col);
+            }
+
+            JS_SetPropertyStr(ctx, argv[2], "colorCount", JS_NewInt32(ctx, arg2));
+
+            return ret;
+        
+}
+
+static JSValue js_UnloadImageColors(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+            // Get pointer to first element
+            JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
+
+	    Color * ptr = (Color *)JS_GetOpaque2(ctx, val, js_Color_class_id);
+        
+            UnloadImageColors(ptr);
+
+            return JS_UNDEFINED;
+        
+}
+
+static JSValue js_UnloadImagePalette(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
+{
+
+
+            // Get pointer to first element
+            JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
+            
+	    Color * ptr = (Color *)JS_GetOpaque2(ctx, val, js_Color_class_id);
+        
+            UnloadImagePalette(ptr);
+
+            return JS_UNDEFINED;
+        
+}
+
 static JSValue js_GetImageAlphaBorder(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
     Image * argptr0 = (Image *)JS_GetOpaque2(ctx, argv[0], js_Image_class_id);
@@ -21430,6 +21508,8 @@ static JSValue js_LoadMaterials(JSContext *ctx, JSValueConst this_val, int argc,
         JS_SetPropertyUint32(ctx, ret, i, obj);
     }
 
+    JS_SetPropertyStr(ctx, argv[1], "materialCount", JS_NewInt32(ctx, arg1));
+
     return ret;
 
         
@@ -21578,6 +21658,7 @@ static JSValue js_UnloadModelAnimations(JSContext *ctx, JSValueConst this_val, i
 {
 
 
+             // Get pointer to first element
              JSValue val = JS_GetPropertyUint32(ctx, argv[0], 0);
 
 	     ModelAnimation * ptr = (ModelAnimation *)JS_GetOpaque2(ctx, val, js_ModelAnimation_class_id);   
@@ -22494,17 +22575,25 @@ static JSValue js_WaveFormat(JSContext *ctx, JSValueConst this_val, int argc, JS
 
 static JSValue js_LoadWaveSamples(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv)
 {
-    Wave * argptr0 = (Wave *)JS_GetOpaque2(ctx, argv[0], js_Wave_class_id);
-        if (argptr0 == NULL) return JS_EXCEPTION;
+
+
+           Wave * argptr0 = (Wave *)JS_GetOpaque2(ctx, argv[0], js_Wave_class_id);
+           if (argptr0 == NULL) return JS_EXCEPTION;
                     
-        Wave arg0 = *argptr0;
+           Wave arg0 = *argptr0;
 
-    float * retBuf = LoadWaveSamples(arg0);
+           float * retVal = LoadWaveSamples(arg0);
+           
+           JSValue ret = JS_NULL;
 
+           if (retVal) {
 
-    JSValue ret = JS_NewArray(ctx);
-            //TODO
-            return ret;
+               ret = JS_NewArrayBufferCopy(ctx, (const uint8_t*)retVal, argptr0->frameCount*argptr0->channels*sizeof(float));
+
+               UnloadWaveSamples(retVal);
+           }
+        
+           return ret;
         
 }
 
@@ -30657,6 +30746,10 @@ static const JSCFunctionListEntry js_raylib_funcs[] = {
     JS_CFUNC_DEF("GenImagePerlinNoise", 5, js_GenImagePerlinNoise ),
     JS_CFUNC_DEF("GenImageCellular", 3, js_GenImageCellular ),
     JS_CFUNC_DEF("GenImageText", 3, js_GenImageText ),
+    JS_CFUNC_DEF("LoadImageColors", 1, js_LoadImageColors ),
+    JS_CFUNC_DEF("LoadImagePalette", 3, js_LoadImagePalette ),
+    JS_CFUNC_DEF("UnloadImageColors", 1, js_UnloadImageColors ),
+    JS_CFUNC_DEF("UnloadImagePalette", 1, js_UnloadImagePalette ),
     JS_CFUNC_DEF("GetImageAlphaBorder", 2, js_GetImageAlphaBorder ),
     JS_CFUNC_DEF("GetImageColor", 3, js_GetImageColor ),
     JS_CFUNC_DEF("LoadTexture", 1, js_LoadTexture ),
